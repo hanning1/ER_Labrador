@@ -8,6 +8,7 @@ Teammates:
 -   Jiaxuan Feng
 -   Shijia Li
 -   Yongjie Liu
+-   Zheng Shi
 
 ---
 
