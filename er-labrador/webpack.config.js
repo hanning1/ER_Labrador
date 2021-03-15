@@ -16,6 +16,7 @@ module.exports = {
 		stats: {
 			colors: true,
 		},
+		historyApiFallback: true,
 	},
 	entry: ["./src/index.js", "./src/dev.js"], //在entry字段中添加触发文件配置
 	// 将 jsx 添加到默认扩展名中，省略 jsx
@@ -45,6 +46,33 @@ module.exports = {
 					},
 				},
 			},
+			{
+				// 写正则表达式，匹配哪些文件
+				test: /\.css$/,
+				// 使用哪些loader进行处理
+				use: [
+					// use数组中loader执行顺序：从右到左，从下到上 依次执行
+					// 创建style标签，将js中的样式资源插入进去，添加到head中生效
+					"style-loader",
+					// 将css文件变成commonJS模块加载到js中，里面内容是样式字符串
+					"css-loader",
+					"resolve-url-loader",
+				],
+			},
+			{
+				test: /\.less$/,
+				use: [
+					"style-loader",
+					"css-loader",
+					// 将less文件变成css文件
+					// 需要下载 less-loader和less
+					"less-loader",
+				],
+			},
+			{
+				test: /\.jpg|png$/,
+				use: ["file-loader"],
+			},
 		],
 	},
 	plugins: [
@@ -58,4 +86,4 @@ module.exports = {
 	],
 };
 
-		// "start": "webpack serve --mode development --open",
+// "start": "webpack serve --mode development --open",
