@@ -4,6 +4,12 @@ import { Button } from "react-bootstrap";
 import { withAuth0 } from "@auth0/auth0-react";
 import { UPDATE_USERNAME } from "../store/actionTypes";
 
+import NavBar from "./navBar";
+
+import { Menu, Layout } from "antd";
+const { Header, Content, Footer, Sider } = Layout;
+import "../styles/home.css";
+
 class Home extends Component {
 	constructor(props) {
 		super(props);
@@ -12,18 +18,15 @@ class Home extends Component {
 		const { user } = this.props.auth0;
 		this.props.updateUsername(user.name);
 	}
+
 	render() {
 		return (
 			<div className="home">
-				Hello {this.props.username}{" "}
-				<Button
-					variant="dark"
-					size="sm"
-					onClick={() => logout({ returnTo: window.location.origin })}
-				>
-					Log out
-				</Button>
-				<h1>This is the main content page</h1>
+				<NavBar>
+					<div className="home-content">
+						We can edit the main content here
+					</div>
+				</NavBar>
 			</div>
 		);
 	}

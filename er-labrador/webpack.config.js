@@ -26,7 +26,7 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.jsx?$/, // jsx文件的正则
+				test: /\.(js|jsx)?$/, // jsx文件的正则
 				exclude: /node_modules/, // 排除 node_modules 文件夹
 				use: {
 					// loader 是 babel
@@ -42,6 +42,7 @@ module.exports = {
 								{ modules: false },
 							],
 						],
+						plugins: ["@babel/plugin-proposal-class-properties"],
 						cacheDirectory: true,
 					},
 				},

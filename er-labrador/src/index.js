@@ -24,24 +24,21 @@ const onRedirectCallback = (appState) => {
 };
 
 const App = (
-	<React.StrictMode>
-		<Auth0Provider
-			domain={DOMAIN_NAME}
-			clientId={CLIENT_ID}
-			redirectUri={REDIRECT_URI}
-			onRedirectCallback={onRedirectCallback}
-		>
-			<Provider store={store}>
-				<Router>
-					<Route path="/" exact component={Login}></Route>
-					<ProtectedRoute
-						path="/home"
-						component={Home}
-					></ProtectedRoute>
-				</Router>
-			</Provider>
-		</Auth0Provider>
-	</React.StrictMode>
+	// <React.StrictMode>
+	<Auth0Provider
+		domain={DOMAIN_NAME}
+		clientId={CLIENT_ID}
+		redirectUri={REDIRECT_URI}
+		onRedirectCallback={onRedirectCallback}
+	>
+		<Provider store={store}>
+			<Router>
+				<Route path="/" exact component={Login}></Route>
+				<ProtectedRoute path="/home" component={Home}></ProtectedRoute>
+			</Router>
+		</Provider>
+	</Auth0Provider>
+	// </React.StrictMode>
 );
 
 ReactDOM.render(App, document.getElementById("root"));

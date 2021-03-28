@@ -6,6 +6,7 @@ import { Button } from "react-bootstrap";
 import "../styles/login.css";
 import Home from "./home";
 import { connect } from "react-redux";
+import Loading from "./loading";
 
 const Login = (props) => {
 	const {
@@ -18,17 +19,7 @@ const Login = (props) => {
 	} = useAuth0();
 
 	if (isLoading) {
-		return (
-			<div className="layer">
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				<div></div>
-				Loading...
-			</div>
-		);
+		return <Loading />;
 	}
 	if (error) {
 		return <div>Oops... {error.message}</div>;
