@@ -63,7 +63,7 @@ const Login = (props) => {
 
 const stateToProps = (state) => {
 	return {
-		username: state.username,
+		user: state.user,
 	};
 };
 

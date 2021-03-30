@@ -1,10 +1,11 @@
 .layer {
-	margin: 25% auto;
-	width: 80px;
-	height: 60px;
+	/* margin: 25% auto; */
+	width: 100px;
+	height: 50px;
 	text-align: center;
-	font-size: 10px;
-	position: relative;
+	position: absolute;
+	top: 48%;
+	left: 47.5%;
 }
 
 .layer > p {

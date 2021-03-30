@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { UPDATE_USERNAME } from "../store/actionTypes";
-import { Menu, Button, Layout } from "antd";
+import { UPDATE_USER } from "../store/actionTypes";
+import { Menu, Button, Layout, Avatar } from "antd";
 import {
 	AppstoreOutlined,
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
-	PieChartOutlined,
-	DesktopOutlined,
-	ContainerOutlined,
-	MailOutlined,
+	OrderedListOutlined,
+	DashboardOutlined,
+	ControlOutlined,
+	UserOutlined,
 } from "@ant-design/icons";
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -24,9 +24,6 @@ class NavBar extends Component {
 		this.state = {
 			collapsed: false,
 		};
-
-		const { user } = this.props.auth0;
-		this.props.updateUsername(user.name);
 	}
 
 	logout = (e) => {
@@ -47,7 +44,7 @@ class NavBar extends Component {
 				<Layout>
 					<Sider
 						breakpoint="lg"
-						collapsedWidth="0"
+						// collapsedWidth="0"
 						// onBreakpoint={(broken) => {
 						// 	console.log(broken);
 						// }}
@@ -57,33 +54,42 @@ class NavBar extends Component {
 						trigger={null}
 						collapsible
 						collapsed={this.state.collapsed}
+						width={300}
 					>
 						<div className="logo" />
 						<Menu
-							defaultSelectedKeys={["1"]}
+							defaultSelectedKeys={[
+								this.props.defaultSelectedKeys !== undefined
+									? this.props.defaultSelectedKeys
+									: "1",
+							]}
 							defaultOpenKeys={["sub1"]}
 							mode="inline"
 							theme="dark"
 							// inlineCollapsed={this.state.collapsed}
 						>
-							<Menu.Item key="1" icon={<PieChartOutlined />}>
-								Option 1
+							<Menu.Item key="1" icon={<DashboardOutlined />}>
+								Dashboard
 							</Menu.Item>
-							<Menu.Item key="2" icon={<DesktopOutlined />}>
-								Option 2
+							<Menu.Item key="2" icon={<ControlOutlined />}>
+								Module Control Space
 							</Menu.Item>
-							<Menu.Item key="3" icon={<ContainerOutlined />}>
-								Option 3
+							<Menu.Item key="3" icon={<UserOutlined />}>
+								Users
 							</Menu.Item>
+							{/* <Menu.Item key="3" icon={<ContainerOutlined />}>
+								Orders
+							</Menu.Item> */}
 							<SubMenu
 								key="sub1"
-								icon={<MailOutlined />}
-								title="Navigation One"
+								icon={<OrderedListOutlined />}
+								title="Orders"
 							>
-								<Menu.Item key="5">Option 5</Menu.Item>
-								<Menu.Item key="6">Option 6</Menu.Item>
-								<Menu.Item key="7">Option 7</Menu.Item>
-								<Menu.Item key="8">Option 8</Menu.Item>
+								<Menu.Item key="4">Ongoing Orders</Menu.Item>
+								<Menu.Item key="5">Completed Orders</Menu.Item>
+								<Menu.Item key="6">
+									Order General Info
+								</Menu.Item>
 							</SubMenu>
 							<SubMenu
 								key="sub2"
@@ -114,7 +120,17 @@ class NavBar extends Component {
 								}
 							)}
 							<div>
-								Hello, {this.props.username}{" "}
+								Hello,{" "}
+								<b>
+									{this.props.user
+										? this.props.user.nickname
+										: "undefined"}
+								</b>
+								{this.props.user ? (
+									<Avatar src={this.props.user.picture} />
+								) : (
+									<Avatar icon={<UserOutlined />} />
+								)}
 								<Button onClick={() => this.logout()}>
 									Log out
 								</Button>
@@ -128,7 +144,9 @@ class NavBar extends Component {
 								{this.props.children}
 							</div>
 						</Content>
-						<Footer style={{ textAlign: "center" }}>TBD</Footer>
+						<Footer style={{ textAlign: "center" }}>
+							Eratos Group-3
+						</Footer>
 					</Layout>
 				</Layout>
 			</div>
@@ -137,16 +155,16 @@ class NavBar extends Component {
 }
 const stateToProps = (state) => {
 	return {
-		username: state.username,
+		user: state.user,
 	};
 };
 
 const dispatchToProps = (dispatch) => {
 	return {
-		updateUsername(username) {
+		updateUser(user) {
 			const action = {
-				type: UPDATE_USERNAME,
-				value: username,
+				type: UPDATE_USER,
+				value: user,
 			};
 			dispatch(action);
 		},

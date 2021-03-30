@@ -19,6 +19,15 @@
 .site-layout-sub-header-background > div {
 	float: right;
 	padding-right: 50px;
+	min-width: 20rem;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.site-layout-sub-header-background > .ant-btn {
+	width: 10rem;
+	margin-left: 5px;
 }
 
 .site-layout-background {
