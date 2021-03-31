@@ -6,7 +6,7 @@ import { UPDATE_USER } from "../store/actionTypes";
 import NavBar from "./navBar";
 import "../styles/index.css";
 
-class Home extends Component {
+class Order extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -20,9 +20,9 @@ class Home extends Component {
 	render() {
 		return (
 			<div className="common-component">
-				<NavBar defaultSelectedKeys="1">
-					<div className="home-content">
-						We can edit the main content here
+				<NavBar defaultSelectedKeys="6">
+					<div className="order-content">
+						We can edit the main content here -- order
 					</div>
 				</NavBar>
 			</div>
@@ -48,4 +48,4 @@ const dispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(stateToProps, dispatchToProps)(withAuth0(Home));
+export default connect(stateToProps, dispatchToProps)(withAuth0(Order));

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
 import { UPDATE_USER } from "../store/actionTypes";
-import { Menu, Button, Layout, Avatar } from "antd";
+import { Menu, Button, Layout, Avatar, Input } from "antd";
 import {
 	AppstoreOutlined,
 	MenuUnfoldOutlined,
@@ -17,6 +17,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 import "antd/dist/antd.css";
 import "../styles/navBar.css";
+import { Redirect, withRouter } from "react-router";
 
 class NavBar extends Component {
 	constructor(props) {
@@ -26,6 +27,7 @@ class NavBar extends Component {
 		};
 	}
 
+	// if logged out, return to the home page
 	logout = (e) => {
 		this.props.auth0.logout({
 			returnTo: window.location.origin,
@@ -68,13 +70,25 @@ class NavBar extends Component {
 							theme="dark"
 							// inlineCollapsed={this.state.collapsed}
 						>
-							<Menu.Item key="1" icon={<DashboardOutlined />}>
+							<Menu.Item
+								key="1"
+								icon={<DashboardOutlined />}
+								onClick={() => {
+									this.props.history.push("/");
+								}}
+							>
 								Dashboard
 							</Menu.Item>
 							<Menu.Item key="2" icon={<ControlOutlined />}>
 								Module Control Space
 							</Menu.Item>
-							<Menu.Item key="3" icon={<UserOutlined />}>
+							<Menu.Item
+								key="3"
+								icon={<UserOutlined />}
+								onClick={() => {
+									this.props.history.push("/users");
+								}}
+							>
 								Users
 							</Menu.Item>
 							{/* <Menu.Item key="3" icon={<ContainerOutlined />}>
@@ -87,7 +101,12 @@ class NavBar extends Component {
 							>
 								<Menu.Item key="4">Ongoing Orders</Menu.Item>
 								<Menu.Item key="5">Completed Orders</Menu.Item>
-								<Menu.Item key="6">
+								<Menu.Item
+									key="6"
+									onClick={() => {
+										this.props.history.push("/orders");
+									}}
+								>
 									Order General Info
 								</Menu.Item>
 							</SubMenu>
@@ -171,4 +190,7 @@ const dispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(stateToProps, dispatchToProps)(withAuth0(NavBar));
+export default connect(
+	stateToProps,
+	dispatchToProps
+)(withRouter(withAuth0(NavBar)));

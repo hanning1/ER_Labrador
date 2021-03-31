@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link, Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 import "../styles/login.css";
@@ -9,14 +8,7 @@ import { connect } from "react-redux";
 import Loading from "./loading";
 
 const Login = (props) => {
-	const {
-		isLoading,
-		isAuthenticated,
-		error,
-		user,
-		loginWithRedirect,
-		logout,
-	} = useAuth0();
+	const { isLoading, isAuthenticated, error, loginWithRedirect } = useAuth0();
 
 	if (isLoading) {
 		return <Loading />;

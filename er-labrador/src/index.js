@@ -2,15 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Route,
+	Link,
+	Redirect,
+} from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 import { DOMAIN_NAME, CLIENT_ID, REDIRECT_URI } from "./store/auth0";
-import Login from "././components/login";
-import Home from "./components/home";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/index.css";
+import Login from "././components/login";
+import Home from "./components/home";
+import Order from "./components/order";
+import users from "./components/users";
 
 export const history = createBrowserHistory();
 
@@ -33,8 +40,10 @@ const App = (
 	>
 		<Provider store={store}>
 			<Router>
-				<Route path="/" exact component={Login}></Route>
-				<ProtectedRoute path="/home" component={Home}></ProtectedRoute>
+				<Route path="/" exact component={Login} />
+				<ProtectedRoute path="/home" component={Home} />
+				<ProtectedRoute path="/orders" component={Order} />
+				<ProtectedRoute path="/users" component={users} />
 			</Router>
 		</Provider>
 	</Auth0Provider>
