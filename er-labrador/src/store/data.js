@@ -50,12 +50,11 @@ export const columns = [
 		width: 150,
 	},
 	{
-		title: "Column 7",
-		dataIndex: "address",
+		title: "Email",
+		dataIndex: "email",
 		key: "7",
 		width: 150,
 	},
-	{ title: "Column 8", dataIndex: "address", key: "8" },
 	{
 		title: "Action",
 		key: "operation",
@@ -72,5 +71,6 @@ for (let i = 0; i < 100; i++) {
 		name: `Edrward ${i}`,
 		age: 32,
 		address: `London Park no. ${i}`,
+		email: `edwardid${i}@gmail.com`,
 	});
 }

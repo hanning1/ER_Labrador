@@ -58,7 +58,13 @@ class NavBar extends Component {
 						collapsed={this.state.collapsed}
 						width={300}
 					>
-						<div className="logo" />
+						<div className="logo">
+							<img
+								src="../assets/eratos.png"
+								width="32"
+								height="32"
+							></img>
+						</div>
 						<Menu
 							defaultSelectedKeys={[
 								this.props.defaultSelectedKeys !== undefined
@@ -146,7 +152,10 @@ class NavBar extends Component {
 										: "undefined"}
 								</b>
 								{this.props.user ? (
-									<Avatar src={this.props.user.picture} />
+									<Avatar
+										src={this.props.user.picture}
+										icon={<UserOutlined />}
+									/>
 								) : (
 									<Avatar icon={<UserOutlined />} />
 								)}
