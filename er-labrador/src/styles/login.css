@@ -4,7 +4,7 @@
 	position: fixed;
 	display: flex;
 	background: transparent;
-	background-image: url("../assets/3839.jpg");
+	background-image: url("../ui/3839.jpg");
 	background-size: cover;
 	background-color: rgba(0, 0, 0, 0.5);
 	box-sizing: border-box;

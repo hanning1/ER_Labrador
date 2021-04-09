@@ -60,7 +60,7 @@ class NavBar extends Component {
 					>
 						<div className="logo">
 							<img
-								src="../assets/eratos.png"
+								src="../ui/eratos.png"
 								width="32"
 								height="32"
 							></img>

@@ -36,7 +36,7 @@ const Login = (props) => {
 			<div className="login">
 				<div className="loginCard">
 					<a href="http://www.eratos.ai">
-						<img src="../assets/eratos.png"></img>
+						<img src="../ui/eratos.png" />
 					</a>
 					<h2>Eratos</h2>
 					<Button
