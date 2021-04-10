@@ -8,7 +8,7 @@ import "../styles/index.css";
 import { Table, Input, Button, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
-import { columns, data } from "../store/data";
+import { columns, data } from "../../data sample/userData";
 
 const { Search } = Input;
 

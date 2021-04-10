@@ -1,15 +1,17 @@
 //webpackage.config.js
 
+const webpack = require("webpack"); //增加导入webpack
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const webpack = require("webpack"); //增加导入webpack
 
 module.exports = {
 	mode: "development",
-	devtool: "cheap-module-source-map",
+	// devtool: "cheap-module-source-map",
 	devServer: {
 		hot: true, //在devServer中增加hot字段
-		contentBase: path.join(__dirname, "./src/"),
+		open: true,
+		inline: true,
+		contentBase: path.join(__dirname, "./src"),
 		publicPath: "/",
 		host: "127.0.0.1",
 		port: 3000,
@@ -18,7 +20,17 @@ module.exports = {
 		},
 		historyApiFallback: true,
 	},
-	entry: ["./src/index.js", "./src/dev.js"], //在entry字段中添加触发文件配置
+	// entry: ["./src/index.js", "./src/dev.js"], //在entry字段中添加触发文件配置
+	entry: {
+		index: path.join(__dirname, "./src/index.js"),
+	},
+	output: {
+		// 输出路径
+		// __dirname nodejs的变量，代表当前文件的目录绝对路径
+		path: __dirname + "/dist",
+		// 输出文件名
+		filename: "[name].[chunkhash].js",
+	},
 	// 将 jsx 添加到默认扩展名中，省略 jsx
 	resolve: {
 		extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"],
@@ -71,20 +83,44 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.jpg|png$/,
-				use: ["file-loader"],
+				test: /\.(jpg|png|gif|svg|jpeg)$/,
+				use: [
+					"url-loader?name=[path][hash:8][name].[ext]!extract-loader!html-loader",
+				],
 			},
 		],
 	},
 	plugins: [
+		// new CleanWebpackPlugin(),
+		// new webpack.NamedModulesPlugin(),
 		// plugins中增加下面内容，实例化热加载插件
-		new webpack.HotModuleReplacementPlugin(),
+		// new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebPackPlugin({
 			template: "public/index.html",
 			filename: "index.html",
 			inject: true,
 		}),
 	],
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				commonjs: {
+					chunks: "initial",
+					minChunks: 2,
+					maxInitialRequests: 5,
+					minSize: 0,
+				},
+				vendor: {
+					test: /node_modules/,
+					chunks: "initial",
+					name: "vendor",
+					priority: 10,
+					enforce: true,
+				},
+			},
+		},
+		runtimeChunk: true,
+	},
 };
 
 // "start": "webpack serve --mode development --open",

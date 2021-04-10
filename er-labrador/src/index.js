@@ -2,12 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import {
-	BrowserRouter as Router,
-	Route,
-	Link,
-	Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 import { DOMAIN_NAME, CLIENT_ID, REDIRECT_URI } from "./store/auth0";
@@ -51,3 +46,6 @@ const App = (
 );
 
 ReactDOM.render(App, document.getElementById("root"));
+if (module.hot) {
+	module.hot.accept();
+}
