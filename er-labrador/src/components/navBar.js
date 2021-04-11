@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { UPDATE_USER } from "../store/actionTypes";
+import { UPDATE_COLLAPSE, UPDATE_USER } from "../store/actionTypes";
 import { Menu, Button, Layout, Avatar, Input } from "antd";
 import {
 	AppstoreOutlined,
@@ -18,13 +18,12 @@ const { Header, Content, Footer, Sider } = Layout;
 import "antd/dist/antd.css";
 import "../styles/navBar.css";
 import { Redirect, withRouter } from "react-router";
+import logo from "../ui/eratos.png";
 
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			collapsed: false,
-		};
+		this.state = {};
 	}
 
 	// if logged out, return to the home page
@@ -35,9 +34,11 @@ class NavBar extends Component {
 	};
 
 	toggleCollapsed = () => {
-		this.setState({
-			collapsed: !this.state.collapsed,
-		});
+		this.props.updateCollapseState(!this.props.collapsed);
+		console.log("toggled", this.props.collapsed);
+		// this.setState({
+		// 	collapsed: !this.state.collapsed,
+		// });
 	};
 
 	render() {
@@ -55,15 +56,13 @@ class NavBar extends Component {
 						// }}
 						trigger={null}
 						collapsible
-						collapsed={this.state.collapsed}
+						collapsed={
+							this.props.collapsed ? this.props.collapsed : false
+						}
 						width={300}
 					>
 						<div className="logo">
-							<img
-								src="../ui/eratos.png"
-								width="32"
-								height="32"
-							></img>
+							<img src={logo} width="32" height="32"></img>
 						</div>
 						<Menu
 							defaultSelectedKeys={[
@@ -71,7 +70,7 @@ class NavBar extends Component {
 									? this.props.defaultSelectedKeys
 									: "1",
 							]}
-							defaultOpenKeys={["sub1"]}
+							// defaultOpenKeys={["sub1"]}
 							mode="inline"
 							theme="dark"
 							// inlineCollapsed={this.state.collapsed}
@@ -85,7 +84,13 @@ class NavBar extends Component {
 							>
 								Dashboard
 							</Menu.Item>
-							<Menu.Item key="2" icon={<ControlOutlined />}>
+							<Menu.Item
+								key="2"
+								icon={<ControlOutlined />}
+								onClick={() => {
+									this.props.history.push("/modules");
+								}}
+							>
 								Module Control Space
 							</Menu.Item>
 							<Menu.Item
@@ -136,7 +141,7 @@ class NavBar extends Component {
 							style={{ padding: 0 }}
 						>
 							{React.createElement(
-								this.state.collapsed
+								this.props.collapsed
 									? MenuUnfoldOutlined
 									: MenuFoldOutlined,
 								{
@@ -184,6 +189,7 @@ class NavBar extends Component {
 const stateToProps = (state) => {
 	return {
 		user: state.user,
+		collapsed: state.collapsed,
 	};
 };
 
@@ -193,6 +199,13 @@ const dispatchToProps = (dispatch) => {
 			const action = {
 				type: UPDATE_USER,
 				value: user,
+			};
+			dispatch(action);
+		},
+		updateCollapseState(bool) {
+			const action = {
+				type: UPDATE_COLLAPSE,
+				value: bool,
 			};
 			dispatch(action);
 		},

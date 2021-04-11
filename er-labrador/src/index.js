@@ -12,7 +12,8 @@ import "./styles/index.css";
 import Login from "././components/login";
 import Home from "./components/home";
 import Order from "./components/order";
-import users from "./components/users";
+import Users from "./components/users";
+import Modules from "./components/modules";
 
 export const history = createBrowserHistory();
 
@@ -38,7 +39,8 @@ const App = (
 				<Route path="/" exact component={Login} />
 				<ProtectedRoute path="/home" component={Home} />
 				<ProtectedRoute path="/orders" component={Order} />
-				<ProtectedRoute path="/users" component={users} />
+				<ProtectedRoute path="/users" component={Users} />
+				<ProtectedRoute path="/modules" component={Modules} />
 			</Router>
 		</Provider>
 	</Auth0Provider>

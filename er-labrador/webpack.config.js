@@ -3,13 +3,15 @@
 const webpack = require("webpack"); //增加导入webpack
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+	.BundleAnalyzerPlugin;
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
 	mode: "development",
 	// devtool: "cheap-module-source-map",
 	devServer: {
 		hot: true, //在devServer中增加hot字段
-		open: true,
 		inline: true,
 		contentBase: path.join(__dirname, "./src"),
 		publicPath: "/",
@@ -21,20 +23,23 @@ module.exports = {
 		historyApiFallback: true,
 	},
 	// entry: ["./src/index.js", "./src/dev.js"], //在entry字段中添加触发文件配置
+
+	// entry: {
+	// 	hot: "webpack/hot/dev-server",
+	// 	index: path.resolve(__dirname, "./src/index.js"),
+	// },
 	entry: {
 		index: path.join(__dirname, "./src/index.js"),
 	},
 	output: {
 		// 输出路径
 		// __dirname nodejs的变量，代表当前文件的目录绝对路径
-		path: __dirname + "/dist",
+		path: path.join(__dirname + "/dist"),
 		// 输出文件名
-		filename: "[name].[chunkhash].js",
+		filename: "[name].bundle.min.js",
+		chunkFilename: "[name].[chunkhash:4].child.js",
 	},
-	// 将 jsx 添加到默认扩展名中，省略 jsx
-	resolve: {
-		extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"],
-	},
+
 	module: {
 		rules: [
 			{
@@ -83,16 +88,17 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.(jpg|png|gif|svg|jpeg)$/,
+				// test: /\.(jpg|png|gif|svg|jpeg)?$/,
+				test: /\.(gif|jpg|png|woff|svg|eot|ttf)$/,
 				use: [
-					"url-loader?name=[path][hash:8][name].[ext]!extract-loader!html-loader",
+					"url-loader?limit=8192&name=ui/[name].[hash].[ext]!extract-loader!file-loader",
 				],
 			},
 		],
 	},
 	plugins: [
 		// new CleanWebpackPlugin(),
-		// new webpack.NamedModulesPlugin(),
+		new BundleAnalyzerPlugin(),
 		// plugins中增加下面内容，实例化热加载插件
 		// new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebPackPlugin({
@@ -100,7 +106,32 @@ module.exports = {
 			filename: "index.html",
 			inject: true,
 		}),
+		new webpack.DefinePlugin({
+			"process.env.NODE_ENV": JSON.stringify(
+				process.env.NODE_ENV || "production"
+			),
+		}),
+		new UglifyJSPlugin({
+			uglifyOptions: {
+				ie8: false,
+				output: {
+					comments: false,
+					beautify: false,
+				},
+				mangle: {
+					keep_fnames: true,
+				},
+				compress: {
+					drop_console: true,
+				},
+				warnings: false,
+			},
+		}),
 	],
+	// 将 jsx 添加到默认扩展名中，省略 jsx
+	resolve: {
+		extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"],
+	},
 	optimization: {
 		splitChunks: {
 			cacheGroups: {
