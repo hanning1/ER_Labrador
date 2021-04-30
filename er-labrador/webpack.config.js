@@ -13,7 +13,7 @@ module.exports = {
 	devServer: {
 		hot: true, //在devServer中增加hot字段
 		inline: true,
-		contentBase: path.join(__dirname, "./src"),
+		contentBase: path.join(__dirname, "./dist"),
 		publicPath: "/",
 		host: "127.0.0.1",
 		port: 3000,
@@ -31,6 +31,7 @@ module.exports = {
 	entry: {
 		index: path.join(__dirname, "./src/index.js"),
 	},
+	// devtool: "inline-source-map",
 	output: {
 		// 输出路径
 		// __dirname nodejs的变量，代表当前文件的目录绝对路径
@@ -153,5 +154,3 @@ module.exports = {
 		runtimeChunk: true,
 	},
 };
-
-// "start": "webpack serve --mode development --open",

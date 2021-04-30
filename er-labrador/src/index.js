@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 import { DOMAIN_NAME, CLIENT_ID, REDIRECT_URI } from "./store/auth0";
@@ -14,6 +14,7 @@ import Home from "./components/home";
 import Order from "./components/order";
 import Users from "./components/users";
 import Modules from "./components/modules";
+import ModuleDetail from "./components/moduleDetail";
 
 export const history = createBrowserHistory();
 
@@ -40,6 +41,10 @@ const App = (
 				<ProtectedRoute path="/home" component={Home} />
 				<ProtectedRoute path="/orders" component={Order} />
 				<ProtectedRoute path="/users" component={Users} />
+				<ProtectedRoute
+					path="/moduleDetail/:id"
+					component={ModuleDetail}
+				/>
 				<ProtectedRoute path="/modules" component={Modules} />
 			</Router>
 		</Provider>

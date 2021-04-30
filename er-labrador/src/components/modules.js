@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route, Redirect } from "react-router";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
 import { UPDATE_USER } from "../store/actionTypes";
@@ -6,9 +7,12 @@ import { UPDATE_USER } from "../store/actionTypes";
 import NavBar from "./navBar";
 import "../styles/index.css";
 import { Table, Input, Button, Space } from "antd";
+import { Button as RBButton } from "react-bootstrap";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
-import { columns, data } from "../../data sample/userData";
+import { columns, data } from "../../data sample/moduleData";
+import moduleDetail from "./moduleDetail";
+import { Link } from "react-router-dom";
 
 const { Search } = Input;
 
@@ -20,6 +24,40 @@ class Modules extends Component {
 			searchedColumn: "",
 			filteredColumns: [],
 		};
+		columns.forEach((item) => {
+			if (item.key !== "operation") {
+				this.state.filteredColumns.push(
+					Object.assign(item, {
+						...this.getColumnSearchProps(item.dataIndex),
+					})
+				);
+			} else {
+				this.state.filteredColumns.push(
+					Object.assign(
+						item,
+						{
+							...this.getColumnSearchProps(item.dataIndex),
+						},
+						{
+							render: (text, record, index) => {
+								return (
+									<Link
+										to={{
+											pathname: `/moduleDetail/${index}`,
+											state: {
+												currRow: record,
+											},
+										}}
+									>
+										<Button size="small">More</Button>
+									</Link>
+								);
+							},
+						}
+					)
+				);
+			}
+		});
 	}
 
 	getColumnSearchProps = (dataIndex) => ({
@@ -112,21 +150,7 @@ class Modules extends Component {
 	componentDidMount = () => {
 		const { user } = this.props.auth0;
 		if (this.props.user !== user) this.props.updateUser(user);
-
-		var filteredColumns = [];
-		columns.map((item) => {
-			filteredColumns.push(
-				Object.assign({}, item, {
-					...this.getColumnSearchProps(item.dataIndex),
-				})
-			);
-		});
-		this.setState({ filteredColumns: filteredColumns });
 	};
-
-	// onChange = (pagination, filters, sorter, extra) => {
-	// 	console.log("params", pagination, filters, sorter, extra);
-	// };
 
 	handleSearch = (selectedKeys, confirm, dataIndex) => {
 		confirm();
@@ -139,6 +163,10 @@ class Modules extends Component {
 	handleReset = (clearFilters) => {
 		clearFilters();
 		this.setState({ searchText: "" });
+	};
+
+	componentWillUnmount = () => {
+		this.setState({ filteredColumns: [] });
 	};
 
 	render() {
@@ -159,6 +187,9 @@ class Modules extends Component {
 							pagination={{
 								position: ["topLeft"],
 								hideOnSinglePage: true,
+							}}
+							rowKey={(record) => {
+								record.id;
 							}}
 						></Table>
 					</div>

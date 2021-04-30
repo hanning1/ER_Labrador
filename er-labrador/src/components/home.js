@@ -13,7 +13,19 @@ class Home extends Component {
 	}
 
 	componentDidMount = () => {
-		const { user } = this.props.auth0;
+		const {
+			user,
+			getAccessTokenSilently,
+			getIdTokenClaims,
+		} = this.props.auth0;
+		const token = getAccessTokenSilently();
+		token.then((res) => {
+			console.log("token", res);
+		});
+		const idTokenClaims = getIdTokenClaims();
+		token.then((res) => {
+			console.log("id_token_claims", res);
+		});
 		if (this.props.user !== user) this.props.updateUser(user);
 	};
 
