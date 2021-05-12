@@ -5,7 +5,14 @@ import store from "./store";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
-import { DOMAIN_NAME, CLIENT_ID, REDIRECT_URI } from "./store/auth0";
+import {
+	DOMAIN_NAME,
+	CLIENT_ID,
+	REDIRECT_URI,
+	REACT_APP_ERATOS_AUTH0_AUD,
+	REACT_APP_ERATOS_AUTH0_DOMAIN,
+	REACT_APP_ERATOS_AUTH0_CLIENT_ID,
+} from "./store/auth0";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/index.css";
@@ -15,6 +22,7 @@ import Order from "./components/order";
 import Users from "./components/users";
 import Modules from "./components/modules";
 import ModuleDetail from "./components/moduleDetail";
+import UserProfile from "./components/userProfile";
 
 export const history = createBrowserHistory();
 
@@ -30,10 +38,11 @@ const onRedirectCallback = (appState) => {
 const App = (
 	// <React.StrictMode>
 	<Auth0Provider
-		domain={DOMAIN_NAME}
-		clientId={CLIENT_ID}
-		redirectUri={REDIRECT_URI}
+		domain={REACT_APP_ERATOS_AUTH0_DOMAIN}
+		clientId={REACT_APP_ERATOS_AUTH0_CLIENT_ID}
+		redirectUri={window.location.origin}
 		onRedirectCallback={onRedirectCallback}
+		useRefreshTokens={true}
 	>
 		<Provider store={store}>
 			<Router>
@@ -46,6 +55,7 @@ const App = (
 					component={ModuleDetail}
 				/>
 				<ProtectedRoute path="/modules" component={Modules} />
+				<ProtectedRoute path="/profile" component={UserProfile} />
 			</Router>
 		</Provider>
 	</Auth0Provider>

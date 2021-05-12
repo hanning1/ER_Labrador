@@ -15,7 +15,10 @@ module.exports = {
 		inline: true,
 		contentBase: path.join(__dirname, "./dist"),
 		publicPath: "/",
-		host: "127.0.0.1",
+		// host: "127.0.0.1",
+		https: true,
+		host: "uom.eratos",
+		disableHostCheck: true,
 		port: 3000,
 		stats: {
 			colors: true,

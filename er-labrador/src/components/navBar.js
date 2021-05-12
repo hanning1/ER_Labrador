@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
 import { UPDATE_COLLAPSE, UPDATE_USER } from "../store/actionTypes";
-import { Menu, Button, Layout, Avatar, Input } from "antd";
+import { Menu, Button, Layout, Avatar, Input, Image } from "antd";
 import {
 	AppstoreOutlined,
 	MenuUnfoldOutlined,
@@ -18,6 +18,7 @@ const { Header, Content, Footer, Sider } = Layout;
 import "antd/dist/antd.css";
 import "../styles/navBar.css";
 import { Redirect, withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import logo from "../ui/eratos.png";
 
 class NavBar extends Component {
@@ -35,10 +36,6 @@ class NavBar extends Component {
 
 	toggleCollapsed = () => {
 		this.props.updateCollapseState(!this.props.collapsed);
-		console.log("toggled", this.props.collapsed);
-		// this.setState({
-		// 	collapsed: !this.state.collapsed,
-		// });
 	};
 
 	render() {
@@ -156,14 +153,30 @@ class NavBar extends Component {
 										? this.props.user.nickname
 										: "undefined"}
 								</b>
-								{this.props.user ? (
+								{/* {this.props.user ? (
 									<Avatar
 										src={this.props.user.picture}
 										icon={<UserOutlined />}
-									/>
+									>
+										<Link
+											to={{
+												pathname: `/profile/`,
+												state: {
+													user: this.props.user,
+												},
+											}}
+										></Link>
+									</Avatar>
 								) : (
 									<Avatar icon={<UserOutlined />} />
-								)}
+								)} */}
+								<Avatar
+									icon={<UserOutlined />}
+									src={this.props.user.picture}
+									onClick={() => {
+										this.props.history.push("/profile/");
+									}}
+								></Avatar>
 								<Button onClick={() => this.logout()}>
 									Log out
 								</Button>
