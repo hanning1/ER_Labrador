@@ -59,8 +59,10 @@ class NavBar extends Component {
 						width={300}
 					>
 						<div className="logo">
-							<img src={logo} width="32" height="32"></img>
+							{/* <img src={logo} width="32" height="32"></img> */}
+							<h1>G+</h1>
 						</div>
+
 						<Menu
 							defaultSelectedKeys={[
 								this.props.defaultSelectedKeys !== undefined

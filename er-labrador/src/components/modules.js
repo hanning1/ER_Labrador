@@ -40,18 +40,33 @@ class Modules extends Component {
 						},
 						{
 							render: (text, record, index) => {
-								return (
-									<Link
-										to={{
-											pathname: `/moduleDetail/${index}`,
-											state: {
-												currRow: record,
-											},
-										}}
-									>
-										<Button size="small">More</Button>
-									</Link>
-								);
+								if (record.status === "Enabled") {
+									return (
+										<Button
+											size="small"
+											className="switch-button-off"
+											onClick={(e) => {
+												e.stopPropagation();
+												console.log("off clicked");
+											}}
+										>
+											Off
+										</Button>
+									);
+								} else if (record.status === "Disabled") {
+									return (
+										<Button
+											size="small"
+											className="switch-button-on"
+											onClick={(e) => {
+												e.stopPropagation();
+												console.log("on clicked");
+											}}
+										>
+											On
+										</Button>
+									);
+								}
 							},
 						}
 					)
@@ -190,6 +205,18 @@ class Modules extends Component {
 							}}
 							rowKey={(record) => {
 								record.id;
+							}}
+							onRow={(record) => {
+								return {
+									onClick: (e) => {
+										this.props.history.push({
+											pathname: `/moduleDetail/${record.key}`,
+											state: {
+												currRow: record,
+											},
+										});
+									},
+								};
 							}}
 						></Table>
 					</div>

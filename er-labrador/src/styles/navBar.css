@@ -9,8 +9,17 @@
 .logo {
 	height: 32px;
 	margin: 16px;
-	background: rgba(255, 255, 255, 0);
 	text-align: center;
+}
+.logo > h1 {
+	font-family: "Huati";
+	font-style: oblique;
+	color: white;
+}
+@font-face {
+	font-family: "Huati";
+	src: url("font/Caviar_de_Diane.ttf");
+	font-weight: bold;
 }
 
 .site-layout-sub-header-background {

@@ -13,11 +13,8 @@ class Home extends Component {
 	}
 
 	componentDidMount = () => {
-		const {
-			user,
-			getAccessTokenSilently,
-			getIdTokenClaims,
-		} = this.props.auth0;
+		const { user, getAccessTokenSilently, getIdTokenClaims } =
+			this.props.auth0;
 		const token = getAccessTokenSilently();
 		token.then((res) => {
 			console.log("token", res);
@@ -34,7 +31,8 @@ class Home extends Component {
 			<div className="common-component">
 				<NavBar defaultSelectedKeys="1">
 					<div className="home-content">
-						We can edit the main content here
+						The section is for dashboard to show statistics and
+						tracking.
 					</div>
 				</NavBar>
 			</div>

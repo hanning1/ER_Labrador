@@ -25,3 +25,13 @@ body {
 .common-component-content > .ant-input-search {
 	margin: 1rem 0 1rem 0;
 }
+
+.switch-button-on {
+	background-color: rgb(107, 250, 71) !important;
+	border-color: rgb(107, 250, 71) !important;
+}
+
+.switch-button-off {
+	background-color: rgb(253, 185, 59) !important;
+	border-color: rgb(253, 185, 59) !important;
+}
