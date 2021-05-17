@@ -29,6 +29,8 @@ class Modules extends Component {
 				this.state.filteredColumns.push(
 					Object.assign(item, {
 						...this.getColumnSearchProps(item.dataIndex),
+						sorter: (a, b) => true,
+					    sortDirections: ['descend', 'ascend'],
 					})
 				);
 			} else {
@@ -37,8 +39,6 @@ class Modules extends Component {
 						item,
 						{
 							...this.getColumnSearchProps(item.dataIndex),
-							sorter: (a, b) => true,
-					    	sortDirections: ['descend', 'ascend'],
 						},
 						{
 							render: (text, record, index) => {
