@@ -13,6 +13,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { columns, data } from "../../data sample/moduleData";
 import moduleDetail from "./moduleDetail";
 import { Link } from "react-router-dom";
+import { Switch } from 'antd';
 
 const { Search } = Input;
 
@@ -25,13 +26,15 @@ class Modules extends Component {
 			filteredColumns: [],
 		};
 		columns.forEach((item) => {
-			if (item.key !== "operation") {
+			if (item.key !== "operation" && item.key!=="1") {
 				this.state.filteredColumns.push(
 					Object.assign(item, {
 						...this.getColumnSearchProps(item.dataIndex),
+						sorter: (a, b) => true,
+					    sortDirections: ['descend', 'ascend'],
 					})
 				);
-			} else {
+			} else if(item.key!=="1"){
 				this.state.filteredColumns.push(
 					Object.assign(
 						item,
@@ -40,33 +43,7 @@ class Modules extends Component {
 						},
 						{
 							render: (text, record, index) => {
-								if (record.status === "Enabled") {
-									return (
-										<Button
-											size="small"
-											className="switch-button-off"
-											onClick={(e) => {
-												e.stopPropagation();
-												console.log("off clicked");
-											}}
-										>
-											Off
-										</Button>
-									);
-								} else if (record.status === "Disabled") {
-									return (
-										<Button
-											size="small"
-											className="switch-button-on"
-											onClick={(e) => {
-												e.stopPropagation();
-												console.log("on clicked");
-											}}
-										>
-											On
-										</Button>
-									);
-								}
+								return (<Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked={record.status==="Enabled"} onClick/>);
 							},
 						}
 					)

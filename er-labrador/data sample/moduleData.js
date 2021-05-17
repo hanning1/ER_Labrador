@@ -25,7 +25,7 @@ export const columns = [
 		width: 100,
 	},
 	{
-		title: "Actions",
+		title: "Status",
 		key: "operation",
 		dataIndex: "",
 		fixed: "right",
