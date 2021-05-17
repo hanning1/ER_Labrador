@@ -6,14 +6,13 @@ import { UPDATE_USER } from "../store/actionTypes";
 
 import NavBar from "./navBar";
 import "../styles/index.css";
-import { Table, Input, Button, Space } from "antd";
+import { Table, Input, Button, Space, Switch } from "antd";
 import { Button as RBButton } from "react-bootstrap";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { columns, data } from "../../data sample/moduleData";
 import moduleDetail from "./moduleDetail";
 import { Link } from "react-router-dom";
-import { Switch } from 'antd';
 
 const { Search } = Input;
 
@@ -26,15 +25,15 @@ class Modules extends Component {
 			filteredColumns: [],
 		};
 		columns.forEach((item) => {
-			if (item.key !== "operation" && item.key!=="1") {
+			if (item.key !== "operation" && item.key !== "1") {
 				this.state.filteredColumns.push(
 					Object.assign(item, {
 						...this.getColumnSearchProps(item.dataIndex),
 						sorter: (a, b) => true,
-					    sortDirections: ['descend', 'ascend'],
+						sortDirections: ["descend", "ascend"],
 					})
 				);
-			} else if(item.key!=="1"){
+			} else if (item.key !== "1") {
 				this.state.filteredColumns.push(
 					Object.assign(
 						item,
@@ -43,7 +42,22 @@ class Modules extends Component {
 						},
 						{
 							render: (text, record, index) => {
-								return (<Switch checkedChildren="On" unCheckedChildren="Off" defaultChecked={record.status==="Enabled"} onClick/>);
+								return (
+									<Switch
+										checkedChildren="On"
+										unCheckedChildren="Off"
+										defaultChecked={
+											record.status === "Enabled"
+										}
+										onClick={(checked, e) => {
+											e.stopPropagation();
+											console.log(
+												record.key,
+												"switch clicked"
+											);
+										}}
+									/>
+								);
 							},
 						}
 					)
