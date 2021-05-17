@@ -37,6 +37,8 @@ class Modules extends Component {
 						item,
 						{
 							...this.getColumnSearchProps(item.dataIndex),
+							sorter: (a, b) => true,
+					    	sortDirections: ['descend', 'ascend'],
 						},
 						{
 							render: (text, record, index) => {

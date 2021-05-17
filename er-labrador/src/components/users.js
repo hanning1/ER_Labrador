@@ -118,6 +118,8 @@ class Users extends Component {
 			filteredColumns.push(
 				Object.assign({}, item, {
 					...this.getColumnSearchProps(item.dataIndex),
+					sorter: (a, b) => true,
+					sortDirections: ['descend', 'ascend'],
 				})
 			);
 		});
