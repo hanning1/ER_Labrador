@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import NavBar from "./navBar";
 import "../styles/index.css";
 
+const { Search } = Input;
+
 class Order extends Component {
 	constructor(props) {
 		super(props);
@@ -20,98 +22,15 @@ class Order extends Component {
 			filteredColumns: [],
 		};
 		columns.forEach((item) => {
-			if (item.key !== "operation") {
-				this.state.filteredColumns.push(
-					Object.assign(item, {
-						...this.getColumnSearchProps(item.dataIndex),
-					})
-				);
-			} else {
-				this.state.filteredColumns.push(
-					Object.assign(
-						item,
-						{
-							...this.getColumnSearchProps(item.dataIndex),
-						},
-						{
-							render: (text, record, index) => {
-								return (
-									<Link
-										to={{
-											pathname: `/moduleDetail/${index}`,
-											state: {
-												currRow: record,
-											},
-										}}
-									>
-										<Button size="small">More</Button>
-									</Link>
-								);
-							},
-						}
-					)
-				);
-			}
+			this.state.filteredColumns.push(
+				Object.assign(item, {
+					...this.getColumnSearchProps(item.dataIndex),
+				})
+			);
 		});
 	}
 
 	getColumnSearchProps = (dataIndex) => ({
-		filterDropdown: ({
-			setSelectedKeys,
-			selectedKeys,
-			confirm,
-			clearFilters,
-		}) => (
-			<div style={{ padding: 8 }}>
-				<Input
-					ref={(node) => {
-						this.searchInput = node;
-					}}
-					placeholder={`Search ${dataIndex}`}
-					value={selectedKeys[0]}
-					onChange={(e) =>
-						setSelectedKeys(e.target.value ? [e.target.value] : [])
-					}
-					onPressEnter={() =>
-						this.handleSearch(selectedKeys, confirm, dataIndex)
-					}
-					style={{ width: 188, marginBottom: 8, display: "block" }}
-				/>
-				<Space>
-					<Button
-						type="primary"
-						onClick={() =>
-							this.handleSearch(selectedKeys, confirm, dataIndex)
-						}
-						icon={<SearchOutlined />}
-						size="small"
-						style={{ width: 90 }}
-					>
-						Search
-					</Button>
-					<Button
-						onClick={() => this.handleReset(clearFilters)}
-						size="small"
-						style={{ width: 90 }}
-					>
-						Reset
-					</Button>
-					<Button
-						type="link"
-						size="small"
-						onClick={() => {
-							confirm({ closeDropdown: false });
-							this.setState({
-								searchText: selectedKeys[0],
-								searchedColumn: dataIndex,
-							});
-						}}
-					>
-						Filter
-					</Button>
-				</Space>
-			</div>
-		),
 		filterIcon: (filtered) => (
 			<SearchOutlined
 				style={{ color: filtered ? "#1890ff" : undefined }}
@@ -129,17 +48,14 @@ class Order extends Component {
 				setTimeout(() => this.searchInput.select(), 100);
 			}
 		},
-		render: (text) =>
-			this.state.searchedColumn === dataIndex ? (
-				<Highlighter
-					highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-					searchWords={[this.state.searchText]}
-					autoEscape
-					textToHighlight={text ? text.toString() : ""}
-				/>
-			) : (
-				text
-			),
+		render: (text) => (
+			<Highlighter
+				highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+				searchWords={[this.state.searchText]}
+				autoEscape
+				textToHighlight={text ? text.toString() : ""}
+			/>
+		),
 	});
 
 	componentDidMount = () => {
@@ -167,11 +83,25 @@ class Order extends Component {
 	render() {
 		return (
 			<div className="common-component">
-				<NavBar defaultSelectedKeys="6">
+				<NavBar defaultSelectedKeys="4">
 					<div className="order-content common-component-content">
+						<Search
+							placeholder="Input search text"
+							allowClear
+							onSearch={(value) => {
+								this.setState({
+									searchText: value,
+								});
+							}}
+							style={{ maxWidth: "80%" }}
+						/>
 						<Table
 							columns={this.state.filteredColumns}
-							dataSource={data}
+							dataSource={data.filter((item) => {
+								return Object.values(item)
+									.toString()
+									.includes(this.state.searchText);
+							})}
 							scroll={{ x: 1500 }}
 							pagination={{
 								position: ["topLeft"],
@@ -179,6 +109,18 @@ class Order extends Component {
 							}}
 							rowKey={(record) => {
 								record.id;
+							}}
+							onRow={(record) => {
+								return {
+									onClick: (e) => {
+										this.props.history.push({
+											pathname: `/orderDetail/${record.key}`,
+											state: {
+												currRow: record,
+											},
+										});
+									},
+								};
 							}}
 						></Table>
 					</div>

@@ -24,13 +24,13 @@ export const columns = [
 		key: "2",
 		width: 80,
 	},
-	{
-		title: "Actions",
-		key: "operation",
-		dataIndex: "",
-		fixed: "right",
-		width: 30,
-	},
+	// {
+	// 	title: "Actions",
+	// 	key: "operation",
+	// 	dataIndex: "",
+	// 	fixed: "right",
+	// 	width: 30,
+	// },
 ];
 var date = new Date();
 export const data = [];

@@ -104,7 +104,16 @@ class NavBar extends Component {
 							{/* <Menu.Item key="3" icon={<ContainerOutlined />}>
 								Orders
 							</Menu.Item> */}
-							<SubMenu
+							<Menu.Item
+								key="4"
+								icon={<OrderedListOutlined />}
+								onClick={() => {
+									this.props.history.push("/orders");
+								}}
+							>
+								Orders
+							</Menu.Item>
+							{/* <SubMenu
 								key="sub1"
 								icon={<OrderedListOutlined />}
 								title="Orders"
@@ -119,8 +128,8 @@ class NavBar extends Component {
 								>
 									Order General Info
 								</Menu.Item>
-							</SubMenu>
-							<SubMenu
+							</SubMenu> */}
+							{/* <SubMenu
 								key="sub2"
 								icon={<AppstoreOutlined />}
 								title="Navigation Two"
@@ -131,7 +140,7 @@ class NavBar extends Component {
 									<Menu.Item key="11">Option 11</Menu.Item>
 									<Menu.Item key="12">Option 12</Menu.Item>
 								</SubMenu>
-							</SubMenu>
+							</SubMenu> */}
 						</Menu>
 					</Sider>
 					<Layout>
@@ -193,7 +202,7 @@ class NavBar extends Component {
 							</div>
 						</Content>
 						<Footer style={{ textAlign: "center" }}>
-							Eratos Group-3
+							Geo+ Group-3
 						</Footer>
 					</Layout>
 				</Layout>

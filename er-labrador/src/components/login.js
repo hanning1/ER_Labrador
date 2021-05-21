@@ -6,7 +6,7 @@ import "../styles/login.css";
 import Home from "./home";
 import { connect } from "react-redux";
 import Loading from "./loading";
-import logo from "../ui/eratos.png";
+import logo from "../ui/logo.png";
 
 const Login = (props) => {
 	const { isLoading, isAuthenticated, error, loginWithRedirect } = useAuth0();
@@ -36,11 +36,11 @@ const Login = (props) => {
 		return (
 			<div className="login">
 				<div className="loginCard">
-					<a href="http://www.eratos.ai">
+					<a>
 						{/* <img src={require("../ui/eratos.png")} /> */}
 						<img src={logo} />
 					</a>
-					<h2>Eratos</h2>
+					{/* <h2>GeoPlus</h2> */}
 					<Button
 						variant="dark"
 						size="lg"

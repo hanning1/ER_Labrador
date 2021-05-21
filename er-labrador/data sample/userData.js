@@ -55,13 +55,12 @@ export const columns = [
 		key: "7",
 		width: 150,
 	},
-	{
-		title: "Action",
-		key: "operation",
-		fixed: "right",
-		width: 100,
-		// render: () => <a>action</a>,
-	},
+	// {
+	// 	title: "Action",
+	// 	key: "operation",
+	// 	fixed: "right",
+	// 	width: 100,
+	// },
 ];
 
 export const data = [];

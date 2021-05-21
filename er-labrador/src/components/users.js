@@ -23,62 +23,6 @@ class Users extends Component {
 	}
 
 	getColumnSearchProps = (dataIndex) => ({
-		filterDropdown: ({
-			setSelectedKeys,
-			selectedKeys,
-			confirm,
-			clearFilters,
-		}) => (
-			<div style={{ padding: 8 }}>
-				<Input
-					ref={(node) => {
-						this.searchInput = node;
-					}}
-					placeholder={`Search ${dataIndex}`}
-					value={selectedKeys[0]}
-					onChange={(e) =>
-						setSelectedKeys(e.target.value ? [e.target.value] : [])
-					}
-					onPressEnter={() =>
-						this.handleSearch(selectedKeys, confirm, dataIndex)
-					}
-					style={{ width: 188, marginBottom: 8, display: "block" }}
-				/>
-				<Space>
-					<Button
-						type="primary"
-						onClick={() =>
-							this.handleSearch(selectedKeys, confirm, dataIndex)
-						}
-						icon={<SearchOutlined />}
-						size="small"
-						style={{ width: 90 }}
-					>
-						Search
-					</Button>
-					<Button
-						onClick={() => this.handleReset(clearFilters)}
-						size="small"
-						style={{ width: 90 }}
-					>
-						Reset
-					</Button>
-					<Button
-						type="link"
-						size="small"
-						onClick={() => {
-							confirm({ closeDropdown: false });
-							this.setState({
-								searchText: selectedKeys[0],
-								searchedColumn: dataIndex,
-							});
-						}}
-					>
-						Filter
-					</Button>
-				</Space>
-			</div>
-		),
 		filterIcon: (filtered) => (
 			<SearchOutlined
 				style={{ color: filtered ? "#1890ff" : undefined }}
@@ -96,17 +40,14 @@ class Users extends Component {
 				setTimeout(() => this.searchInput.select(), 100);
 			}
 		},
-		render: (text) =>
-			this.state.searchedColumn === dataIndex ? (
-				<Highlighter
-					highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-					searchWords={[this.state.searchText]}
-					autoEscape
-					textToHighlight={text ? text.toString() : ""}
-				/>
-			) : (
-				text
-			),
+		render: (text) => (
+			<Highlighter
+				highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+				searchWords={[this.state.searchText]}
+				autoEscape
+				textToHighlight={text ? text.toString() : ""}
+			/>
+		),
 	});
 
 	componentDidMount = () => {
@@ -119,7 +60,7 @@ class Users extends Component {
 				Object.assign({}, item, {
 					...this.getColumnSearchProps(item.dataIndex),
 					sorter: (a, b) => true,
-					sortDirections: ['descend', 'ascend'],
+					sortDirections: ["descend", "ascend"],
 				})
 			);
 		});
@@ -148,19 +89,42 @@ class Users extends Component {
 			<div className="common-component">
 				<NavBar defaultSelectedKeys="3">
 					<div className="users-content common-component-content">
-						{/* <Search
+						<Search
 							placeholder="Input search text"
 							allowClear
-							onSearch={(value) => this.onSearch(value)}
+							onSearch={(value) => {
+								this.setState({
+									searchText: value,
+								});
+							}}
 							style={{ maxWidth: "80%" }}
-						/> */}
+						/>
 						<Table
 							columns={this.state.filteredColumns}
-							dataSource={data}
+							dataSource={data.filter((item) => {
+								return Object.values(item)
+									.toString()
+									.includes(this.state.searchText);
+							})}
 							scroll={{ x: 1500 }}
 							pagination={{
 								position: ["topLeft"],
 								hideOnSinglePage: true,
+							}}
+							rowKey={(record) => {
+								record.id;
+							}}
+							onRow={(record) => {
+								return {
+									onClick: (e) => {
+										this.props.history.push({
+											pathname: `/userDetail/${record.key}`,
+											state: {
+												currRow: record,
+											},
+										});
+									},
+								};
 							}}
 						></Table>
 					</div>

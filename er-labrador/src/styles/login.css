@@ -36,8 +36,8 @@
 }
 
 .loginCard > a > img {
-	width: 13rem;
-	height: 13rem;
+	width: 25rem;
+	height: 15rem;
 	padding: 20px;
 	transition: all, 0.3s;
 }
