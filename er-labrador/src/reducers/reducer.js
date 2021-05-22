@@ -2,6 +2,7 @@ import { UPDATE_COLLAPSE, UPDATE_USER } from "../store/actionTypes";
 
 const defaultState = {
 	user: {
+		id: "",
 		nickname: "",
 		email: "",
 		email_verified: false,

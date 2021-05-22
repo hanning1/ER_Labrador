@@ -10,6 +10,11 @@ import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { columns, data } from "../../data sample/userData";
 
+import {
+	REACT_APP_ERATOS_TRACKER,
+	REACT_APP_ERATOS_AUTH0_AUD,
+} from "../store/auth0";
+
 const { Search } = Input;
 
 class Users extends Component {
@@ -21,6 +26,25 @@ class Users extends Component {
 			filteredColumns: [],
 		};
 	}
+
+	getUserId = async (pnToken) => {
+		const headers = {
+			Authorization: "Bearer " + pnToken,
+			Accept: "application/json",
+		};
+
+		const result = await fetch(`${REACT_APP_ERATOS_TRACKER}/auth/me`, {
+			method: "GET",
+			headers,
+		});
+
+		if (result.status >= 200 && result.status < 400) {
+			const data = await result.json();
+			return data?.id;
+		} else {
+			throw await result.json();
+		}
+	};
 
 	getColumnSearchProps = (dataIndex) => ({
 		filterIcon: (filtered) => (
@@ -50,8 +74,15 @@ class Users extends Component {
 		),
 	});
 
-	componentDidMount = () => {
-		const { user } = this.props.auth0;
+	componentDidMount = async () => {
+		const { user, getAccessTokenSilently } = this.props.auth0;
+
+		const token = await getAccessTokenSilently({
+			audience: REACT_APP_ERATOS_AUTH0_AUD,
+		});
+		const userId = await this.getUserId(token);
+		user["id"] = userId;
+
 		if (this.props.user !== user) this.props.updateUser(user);
 
 		var filteredColumns = [];

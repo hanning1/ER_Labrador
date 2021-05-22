@@ -24,6 +24,7 @@ class Modules extends Component {
 			searchedColumn: "",
 			filteredColumns: [],
 		};
+
 		columns.forEach((item) => {
 			if (item.key !== "operation" && item.key !== "1") {
 				this.state.filteredColumns.push(
@@ -65,6 +66,25 @@ class Modules extends Component {
 			}
 		});
 	}
+
+	getUserId = async (pnToken) => {
+		const headers = {
+			Authorization: "Bearer " + pnToken,
+			Accept: "application/json",
+		};
+
+		const result = await fetch(`${REACT_APP_ERATOS_TRACKER}/auth/me`, {
+			method: "GET",
+			headers,
+		});
+
+		if (result.status >= 200 && result.status < 400) {
+			const data = await result.json();
+			return data?.id;
+		} else {
+			throw await result.json();
+		}
+	};
 
 	getColumnSearchProps = (dataIndex) => ({
 		filterIcon: (filtered) => (
