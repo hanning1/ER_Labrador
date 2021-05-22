@@ -2,14 +2,28 @@ export const columns = [
 	{
 		title: "Order ID",
 		width: 30,
-		dataIndex: "id",
+		dataIndex: "OrderID",
 		key: "id",
 	},
 	{
-		title: "Order Name",
+		title: "User ID",
 		width: 30,
-		dataIndex: "name",
-		key: "name",
+		dataIndex: "UserID",
+		key: "userID",
+		// fixed: "left",
+	},
+	{
+		title: "Price",
+		width: 30,
+		dataIndex: "Price",
+		key: "price",
+		// fixed: "left",
+	},
+	{
+		title: "Payment ID",
+		width: 30,
+		dataIndex: "PaymentID",
+		key: "paymentID",
 		// fixed: "left",
 	},
 	{
@@ -19,28 +33,23 @@ export const columns = [
 		width: 25,
 	},
 	{
-		title: "Updated at",
+		title: "Time of Order Placed",
 		dataIndex: "updatedAt",
 		key: "2",
 		width: 80,
 	},
-	// {
-	// 	title: "Actions",
-	// 	key: "operation",
-	// 	dataIndex: "",
-	// 	fixed: "right",
-	// 	width: 30,
-	// },
+	
 ];
 var date = new Date();
 export const data = [];
 for (let i = 0; i < 100; i++) {
 	data.push({
 		key: i,
-		id: `0000${i}`,
-		name: `Order ${i}`,
+		OrderID: `000${i}`,
+		UserID: `000${i}`,
+		Price: 3*(100-i),
 		status: i % 2 == 0 ? "Pending" : "Ongoing",
-		address: `London Park no. ${i}`,
+		PaymentID: `0000000${i}`,
 		updatedAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} 
         ${date.getHours()}:${date.getUTCMinutes()}:${date.getSeconds()}`,
 	});

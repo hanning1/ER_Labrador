@@ -1,5 +1,12 @@
 export const columns = [
 	{
+		title: "User ID",
+		width: 100,
+		dataIndex: "UserID",
+		key: "userID",
+		fixed: "left",
+	},
+	{
 		title: "Full Name",
 		width: 100,
 		dataIndex: "name",
@@ -7,69 +14,49 @@ export const columns = [
 		fixed: "left",
 	},
 	{
-		title: "Age",
+		title: "Eratos User ID",
 		width: 100,
-		dataIndex: "age",
-		key: "age",
+		dataIndex: "EratosUserID",
+		key: "eratosID",
 		fixed: "left",
 	},
 	{
-		title: "Column 1",
-		dataIndex: "address",
-		key: "1",
+		title: "Email",
+		dataIndex: "Email",
+		key: "7",
 		width: 150,
 	},
 	{
-		title: "Column 2",
-		dataIndex: "address",
+		title: "Auth0 ID",
+		dataIndex: "Auth0ID",
 		key: "2",
 		width: 150,
 	},
 	{
-		title: "Column 3",
-		dataIndex: "address",
+		title: "User Created Time",
+		dataIndex: "CreatedAt",
 		key: "3",
 		width: 150,
 	},
 	{
-		title: "Column 4",
-		dataIndex: "address",
+		title: "Administrator",
+		dataIndex: "isAdmin",
 		key: "4",
 		width: 150,
-	},
-	{
-		title: "Column 5",
-		dataIndex: "address",
-		key: "5",
-		width: 150,
-	},
-	{
-		title: "Column 6",
-		dataIndex: "address",
-		key: "6",
-		width: 150,
-	},
-	{
-		title: "Email",
-		dataIndex: "email",
-		key: "7",
-		width: 150,
-	},
-	// {
-	// 	title: "Action",
-	// 	key: "operation",
-	// 	fixed: "right",
-	// 	width: 100,
-	// },
+	}
 ];
-
+var date = new Date();
 export const data = [];
 for (let i = 0; i < 100; i++) {
 	data.push({
 		key: i,
-		name: `Edrward ${i}`,
-		age: 32,
-		address: `London Park no. ${i}`,
-		email: `edwardid${i}@gmail.com`,
+		UserID: `000${i}`,
+		name: `Edward ${i}`,
+		EratosUserID : `000${i}`,
+		Auth0ID : `000${i}`,
+		CreatedAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} 
+        ${date.getHours()}:${date.getUTCMinutes()}:${date.getSeconds()}`,
+		Email: `edwardid${i}@gmail.com`,
+		isAdmin : i == 0 || i ==1 ? "Yes" : "No"
 	});
 }

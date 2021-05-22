@@ -2,13 +2,13 @@ export const columns = [
 	{
 		title: "Module ID",
 		width: 50,
-		dataIndex: "id",
+		dataIndex: "ModuleID",
 		key: "id",
 	},
 	{
 		title: "Module Name",
 		width: 50,
-		dataIndex: "name",
+		dataIndex: "ModuleName",
 		key: "name",
 		// fixed: "left",
 	},
@@ -19,13 +19,13 @@ export const columns = [
 		width: 50,
 	},
 	{
-		title: "Email",
-		dataIndex: "email",
+		title: "Module Schema",
+		dataIndex: "ModuleSchema",
 		key: "2",
 		width: 100,
 	},
 	{
-		title: "Status",
+		title: "Active Status",
 		key: "operation",
 		dataIndex: "",
 		fixed: "right",
@@ -34,13 +34,15 @@ export const columns = [
 ];
 
 export const data = [];
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 10; i++) {
 	data.push({
 		key: i,
-		id: `0000${i}`,
-		name: `Module ${i}`,
+		ModuleID: `${i}`,
+		ModuleName: `Module ${i}`,
+		ModuleSchema: `Module Metadata ${i}`,
 		status: i % 2 == 0 ? "Enabled" : "Disabled",
+		isActive: i % 2 == 0 ? "Yes" : "No",
 		address: `London Park no. ${i}`,
-		email: `edwardid${i}@gmail.com`,
+		
 	});
 }

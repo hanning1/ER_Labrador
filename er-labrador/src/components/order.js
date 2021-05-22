@@ -31,6 +31,8 @@ class Order extends Component {
 			this.state.filteredColumns.push(
 				Object.assign(item, {
 					...this.getColumnSearchProps(item.dataIndex),
+					sorter: (a, b) => true,
+					sortDirections: ["descend", "ascend"],
 				})
 			);
 		});
