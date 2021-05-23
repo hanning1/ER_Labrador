@@ -8,7 +8,7 @@ import "../styles/index.css";
 import { Descriptions, Table, Input, Button, Space } from "antd";
 import { Button as RBButton } from "react-bootstrap";
 
-class ModuleDetail extends Component {
+class OrderDetail extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -17,12 +17,13 @@ class ModuleDetail extends Component {
 			currRow: props.location.state.currRow,
 			size: 'default',
 		};
-		console.log(this.state.currRow);
+
 	}
 
 	componentDidMount = () => {
 		const { user } = this.props.auth0;
 		if (this.props.user !== user) this.props.updateUser(user);
+		console.log("successful");
 	};
 
 	render() {
@@ -32,15 +33,17 @@ class ModuleDetail extends Component {
 					<div className="module-detail-content common-component-content">
 						<Descriptions
           					bordered
-          					title="Module Details"
+          					title="Order Details"
           					size={this.state.size}
-         					extra={<Button type="primary">Edit</Button>}
         				>
-          				<Descriptions.Item label="Module ID">{this.state.currRow.ModuleID}</Descriptions.Item>
-          				<Descriptions.Item label="Module Name">{this.state.currRow.ModuleName}</Descriptions.Item>
-          				<Descriptions.Item label="Module Schema">{this.state.currRow.ModuleSchema}</Descriptions.Item>
-          				<Descriptions.Item label="Active Status">{this.state.currRow.isActive}</Descriptions.Item>
+          				<Descriptions.Item label="Order ID">{this.state.currRow.OrderID}</Descriptions.Item>
+          				<Descriptions.Item label="Price">{this.state.currRow.Price}</Descriptions.Item>
+          				<Descriptions.Item label="Status">{this.state.currRow.Status}</Descriptions.Item>
+          				<Descriptions.Item label="User ID">{this.state.currRow.UserID}</Descriptions.Item>
+          				<Descriptions.Item label="Payment ID">{this.state.currRow.PaymentID}</Descriptions.Item>
+          				<Descriptions.Item label="Time of Order Placed">{this.state.currRow.OrderTime}</Descriptions.Item>
             			</Descriptions>
+
 					</div>
 				</NavBar>
 			</div>
@@ -66,4 +69,4 @@ const dispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(stateToProps, dispatchToProps)(withAuth0(ModuleDetail));
+export default connect(stateToProps, dispatchToProps)(withAuth0(OrderDetail));

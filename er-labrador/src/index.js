@@ -19,9 +19,11 @@ import "./styles/index.css";
 import Login from "././components/login";
 import Home from "./components/home";
 import Order from "./components/order";
+import OrderDetail from "./components/orderDetail";
 import Users from "./components/users";
 import Modules from "./components/modules";
 import ModuleDetail from "./components/moduleDetail";
+import UserDetail from "./components/userDetail";
 import UserProfile from "./components/userProfile";
 
 export const history = createBrowserHistory();
@@ -48,12 +50,11 @@ const App = (
 			<Router>
 				<Route path="/" exact component={Login} />
 				<ProtectedRoute path="/home" component={Home} />
+				<ProtectedRoute path="/orderDetail" component={OrderDetail} />
 				<ProtectedRoute path="/orders" component={Order} />
+				<ProtectedRoute path="/userDetail/:id" component={UserDetail}/>
 				<ProtectedRoute path="/users" component={Users} />
-				<ProtectedRoute
-					path="/moduleDetail/:id"
-					component={ModuleDetail}
-				/>
+				<ProtectedRoute path="/moduleDetail/:id" component={ModuleDetail}/>
 				<ProtectedRoute path="/modules" component={Modules} />
 				<ProtectedRoute path="/profile" component={UserProfile} />
 			</Router>

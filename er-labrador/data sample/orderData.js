@@ -28,13 +28,13 @@ export const columns = [
 	},
 	{
 		title: "Status",
-		dataIndex: "status",
+		dataIndex: "Status",
 		key: "1",
 		width: 25,
 	},
 	{
 		title: "Time of Order Placed",
-		dataIndex: "updatedAt",
+		dataIndex: "OrderTime",
 		key: "2",
 		width: 80,
 	},
@@ -48,9 +48,9 @@ for (let i = 0; i < 100; i++) {
 		OrderID: `000${i}`,
 		UserID: `000${i}`,
 		Price: 3*(100-i),
-		status: i % 2 == 0 ? "Pending" : "Ongoing",
+		Status: i % 2 == 0 ? "Pending" : "Ongoing",
 		PaymentID: `0000000${i}`,
-		updatedAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} 
+		OrderTime: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} 
         ${date.getHours()}:${date.getUTCMinutes()}:${date.getSeconds()}`,
 	});
 }

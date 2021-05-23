@@ -8,7 +8,7 @@ import "../styles/index.css";
 import { Descriptions, Table, Input, Button, Space } from "antd";
 import { Button as RBButton } from "react-bootstrap";
 
-class ModuleDetail extends Component {
+class UserDetail extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -16,13 +16,14 @@ class ModuleDetail extends Component {
 			searchedColumn: "",
 			currRow: props.location.state.currRow,
 			size: 'default',
-		};
-		console.log(this.state.currRow);
+		};	
+
 	}
 
 	componentDidMount = () => {
 		const { user } = this.props.auth0;
 		if (this.props.user !== user) this.props.updateUser(user);
+		
 	};
 
 	render() {
@@ -32,15 +33,19 @@ class ModuleDetail extends Component {
 					<div className="module-detail-content common-component-content">
 						<Descriptions
           					bordered
-          					title="Module Details"
+          					title="User Details"
           					size={this.state.size}
-         					extra={<Button type="primary">Edit</Button>}
         				>
-          				<Descriptions.Item label="Module ID">{this.state.currRow.ModuleID}</Descriptions.Item>
-          				<Descriptions.Item label="Module Name">{this.state.currRow.ModuleName}</Descriptions.Item>
-          				<Descriptions.Item label="Module Schema">{this.state.currRow.ModuleSchema}</Descriptions.Item>
-          				<Descriptions.Item label="Active Status">{this.state.currRow.isActive}</Descriptions.Item>
+          				<Descriptions.Item label="User ID">{this.state.currRow.UserID}</Descriptions.Item>
+          				<Descriptions.Item label="Full Name">{this.state.currRow.name}</Descriptions.Item>
+          				<Descriptions.Item label="Email">{this.state.currRow.Email}</Descriptions.Item>
+          				<Descriptions.Item label="Eratos User ID">{this.state.currRow.EratosUserID}</Descriptions.Item>
+          				<Descriptions.Item label="Auth0 ID">{this.state.currRow.Auth0ID}</Descriptions.Item>
+          				<Descriptions.Item label="Administrator">{this.state.currRow.isAdmin}</Descriptions.Item>
+          				<Descriptions.Item label="Date and Time of User Created">{this.state.currRow.CreatedAt}</Descriptions.Item>
+          				<Descriptions.Item label="Info">{this.state.currRow.Info}</Descriptions.Item>
             			</Descriptions>
+
 					</div>
 				</NavBar>
 			</div>
@@ -66,4 +71,4 @@ const dispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(stateToProps, dispatchToProps)(withAuth0(ModuleDetail));
+export default connect(stateToProps, dispatchToProps)(withAuth0(UserDetail));

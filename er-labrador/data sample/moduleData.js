@@ -42,7 +42,6 @@ for (let i = 0; i < 10; i++) {
 		ModuleSchema: `Module Metadata ${i}`,
 		status: i % 2 == 0 ? "Enabled" : "Disabled",
 		isActive: i % 2 == 0 ? "Yes" : "No",
-		address: `London Park no. ${i}`,
 		
 	});
 }

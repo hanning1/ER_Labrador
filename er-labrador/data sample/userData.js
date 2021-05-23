@@ -9,7 +9,7 @@ export const columns = [
 	{
 		title: "Full Name",
 		width: 100,
-		dataIndex: "name",
+		dataIndex: "Name",
 		key: "name",
 		fixed: "left",
 	},
@@ -33,7 +33,7 @@ export const columns = [
 		width: 150,
 	},
 	{
-		title: "User Created Time",
+		title: "Date and Time of User Created",
 		dataIndex: "CreatedAt",
 		key: "3",
 		width: 150,
@@ -51,12 +51,13 @@ for (let i = 0; i < 100; i++) {
 	data.push({
 		key: i,
 		UserID: `000${i}`,
-		name: `Edward ${i}`,
+		Name: `Edward ${i}`,
 		EratosUserID : `000${i}`,
 		Auth0ID : `000${i}`,
 		CreatedAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} 
         ${date.getHours()}:${date.getUTCMinutes()}:${date.getSeconds()}`,
 		Email: `edwardid${i}@gmail.com`,
-		isAdmin : i == 0 || i ==1 ? "Yes" : "No"
+		isAdmin : i == 0 || i ==1 ? "Yes" : "No",
+		Info : "This is the info section which may contain the description of the user"
 	});
 }
