@@ -6,8 +6,8 @@ import { UPDATE_USER } from "../store/actionTypes";
 
 import NavBar from "./navBar";
 import "../styles/index.css";
-import { Table, Input, Button, Space, Switch,message } from "antd";
-import { PlusOutlined } from '@ant-design/icons';
+import { Table, Input, Button, Space, Switch, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { Button as RBButton } from "react-bootstrap";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
@@ -15,20 +15,14 @@ import { columns, data } from "../../data sample/moduleData";
 import moduleDetail from "./moduleDetail";
 import { Link } from "react-router-dom";
 
-
 import ProForm, {
-  ModalForm,
-  DrawerForm,
-  QueryFilter,
-  LightFilter,
-  StepsForm,
-  ProFormText,
-  ProFormTextArea,
-  ProFormSelect,
-} from '@ant-design/pro-form';
+	ModalForm,
+	ProFormText,
+	ProFormTextArea,
+	ProFormSelect,
+} from "@ant-design/pro-form";
 
 const { Search } = Input;
-
 
 class Modules extends Component {
 	constructor(props) {
@@ -37,6 +31,7 @@ class Modules extends Component {
 			searchText: "",
 			searchedColumn: "",
 			filteredColumns: [],
+			dataSource: data,
 		};
 
 		columns.forEach((item) => {
@@ -137,13 +132,21 @@ class Modules extends Component {
 		this.setState({ filteredColumns: [] });
 	};
 
+	waitTime = (time = 100) => {
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(true);
+			}, time);
+		});
+	};
+
 	render() {
 		return (
 			<div className="common-component">
 				<NavBar defaultSelectedKeys="2">
 					<div className="modules-content common-component-content">
-						<div >
-						<Search style={{ maxWidth: "80%",marginRight:15}}
+						<Search
+							style={{ maxWidth: "80%", marginRight: 15 }}
 							placeholder="Input search text"
 							allowClear
 							onSearch={(value) => {
@@ -151,62 +154,101 @@ class Modules extends Component {
 									searchText: value,
 								});
 							}}
-							
 						/>
 
-						 
-						<ModalForm 	labelWidth="auto"
-						            submitter={{
-						           	searchConfig:{resetText: 'Reset',
-						      		submitText: 'Submit',},
-						           }}
-						          trigger={
-						            <Button type="primary">
-						              <PlusOutlined />
-						              Add
-						            </Button>
-						          }
-						          onFinish={async (values) => {
-						            console.log(values);
-						            message.success('Successfully added');
-						          }}
-						         >
+						<ModalForm
+							labelWidth="auto"
+							submitter={{
+								searchConfig: {
+									resetText: "Reset",
+									submitText: "Submit",
+								},
+							}}
+							trigger={
+								<Button type="primary">
+									<PlusOutlined />
+									Add
+								</Button>
+							}
+							onFinish={async (values) => {
+								let data = [...this.state.dataSource];
+								const newData = values;
+								newData["key"] = this.state.dataSource.length;
+								newData["ModuleID"] =
+									this.state.dataSource.length.toString();
+								newData["status"] =
+									values.isActive === "true"
+										? "Enabled"
+										: "Disabled";
+								// post method can be created through replacing following code
+								data.push(newData);
+								this.setState({
+									dataSource: data,
+								});
+								await this.waitTime();
+								message.success("Successfully added");
+								return true;
+							}}
+						>
+							<ProForm.Group>
+								<ProFormText
+									width="md"
+									name="ModuleName"
+									label="Name"
+									placeholder="Please enter a module name"
+									rules={[
+										{
+											required: true,
+											message: "Please enter the name!",
+										},
+									]}
+								/>
+							</ProForm.Group>
 
-								  	<ProForm.Group>
-								  	<ProFormText width="md" name="ModuleName" label="Name" placeholder="Please enter a module name"
-								  	rules={[{ required: true, message: 'Please enter the name!'}]} />
-							      	</ProForm.Group>
+							<ProForm.Group>
+								<ProFormText
+									width="lg"
+									name="ModuleSchema"
+									label="Module Schema"
+									placeholder="Please enter the url of the schema"
+									rules={[
+										{
+											required: true,
+											message:
+												"Please enter the schema url!",
+										},
+									]}
+								/>
+							</ProForm.Group>
 
-									<ProForm.Group>
-									<ProFormText width="lg" name="ModuleSchema" label="Module Schema" placeholder="Please enter the url of the schema" 
-									rules={[{ required: true, message: 'Please enter the schema url!'}]}/>
-									</ProForm.Group>
+							<ProForm.Group>
+								<ProFormSelect
+									options={[
+										{ value: "true", label: "Yes" },
+										{ value: "no", label: "No" },
+									]}
+									name="isActive"
+									label="Active Status"
+									placeholder="Please select"
+									rules={[
+										{
+											required: true,
+											message:
+												"Please select an active status!",
+										},
+									]}
+								/>
+							</ProForm.Group>
 
-
-									<ProForm.Group>
-						            <ProFormSelect
-						              
-						              options={[
-						                {value: 'true',label: 'Yes',},
-						                {value: 'no',label: 'No',},
-						              ]}
-						              name="isActive"
-						              label="Active Status"
-						              placeholder="Please select"
-						              rules={[{ required: true, message: 'Please select a active status!'}]}
-						            />
-						          	</ProForm.Group>
-						          	
-							  		<ProFormTextArea name="Description" label="Description" placeholder="Please enter description here" />
-						      		
-						 </ModalForm> </div>   
-
-
-
-						<div>
+							<ProFormTextArea
+								name="Description"
+								label="Description"
+								placeholder="Please enter description here"
+							/>
+						</ModalForm>
 						<Table
 							columns={this.state.filteredColumns}
-							dataSource={data.filter((item) => {
+							dataSource={this.state.dataSource.filter((item) => {
 								return Object.values(item)
 									.toString()
 									.includes(this.state.searchText);
@@ -231,7 +273,7 @@ class Modules extends Component {
 									},
 								};
 							}}
-						></Table></div>
+						></Table>
 					</div>
 				</NavBar>
 			</div>
