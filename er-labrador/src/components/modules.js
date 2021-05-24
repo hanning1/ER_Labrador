@@ -6,7 +6,8 @@ import { UPDATE_USER } from "../store/actionTypes";
 
 import NavBar from "./navBar";
 import "../styles/index.css";
-import { Table, Input, Button, Space, Switch } from "antd";
+import { Table, Input, Button, Space, Switch,message } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
 import { Button as RBButton } from "react-bootstrap";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
@@ -14,7 +15,20 @@ import { columns, data } from "../../data sample/moduleData";
 import moduleDetail from "./moduleDetail";
 import { Link } from "react-router-dom";
 
+
+import ProForm, {
+  ModalForm,
+  DrawerForm,
+  QueryFilter,
+  LightFilter,
+  StepsForm,
+  ProFormText,
+  ProFormTextArea,
+  ProFormSelect,
+} from '@ant-design/pro-form';
+
 const { Search } = Input;
+
 
 class Modules extends Component {
 	constructor(props) {
@@ -128,7 +142,8 @@ class Modules extends Component {
 			<div className="common-component">
 				<NavBar defaultSelectedKeys="2">
 					<div className="modules-content common-component-content">
-						<Search
+						<div >
+						<Search style={{ maxWidth: "80%",marginRight:15}}
 							placeholder="Input search text"
 							allowClear
 							onSearch={(value) => {
@@ -136,8 +151,59 @@ class Modules extends Component {
 									searchText: value,
 								});
 							}}
-							style={{ maxWidth: "80%" }}
+							
 						/>
+
+						 
+						<ModalForm 	labelWidth="auto"
+						            submitter={{
+						           	searchConfig:{resetText: 'Reset',
+						      		submitText: 'Submit',},
+						           }}
+						          trigger={
+						            <Button type="primary">
+						              <PlusOutlined />
+						              Add
+						            </Button>
+						          }
+						          onFinish={async (values) => {
+						            console.log(values);
+						            message.success('Successfully added');
+						          }}
+						         >
+
+								  	<ProForm.Group>
+								  	<ProFormText width="md" name="ModuleName" label="Name" placeholder="Please enter a module name"
+								  	rules={[{ required: true, message: 'Please enter the name!'}]} />
+							      	</ProForm.Group>
+
+									<ProForm.Group>
+									<ProFormText width="lg" name="ModuleSchema" label="Module Schema" placeholder="Please enter the url of the schema" 
+									rules={[{ required: true, message: 'Please enter the schema url!'}]}/>
+									</ProForm.Group>
+
+
+									<ProForm.Group>
+						            <ProFormSelect
+						              
+						              options={[
+						                {value: 'true',label: 'Yes',},
+						                {value: 'no',label: 'No',},
+						              ]}
+						              name="isActive"
+						              label="Active Status"
+						              placeholder="Please select"
+						              rules={[{ required: true, message: 'Please select a active status!'}]}
+						            />
+						          	</ProForm.Group>
+						          	
+							  		<ProFormTextArea name="Description" label="Description" placeholder="Please enter description here" />
+						      		
+						 </ModalForm> </div>   
+
+
+
+						<div>
 						<Table
 							columns={this.state.filteredColumns}
 							dataSource={data.filter((item) => {
@@ -165,7 +231,7 @@ class Modules extends Component {
 									},
 								};
 							}}
-						></Table>
+						></Table></div>
 					</div>
 				</NavBar>
 			</div>

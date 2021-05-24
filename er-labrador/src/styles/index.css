@@ -36,3 +36,15 @@ body {
 	background-color: rgb(253, 185, 59) !important;
 	border-color: rgb(253, 185, 59) !important;
 }
+
+
+.ant-descriptions-title{
+	font-size :25px !important;
+}
+
+.ant-descriptions-item-label{
+	width:120px !important;
+}
+.ant-descriptions-item-content{
+	width:200px !important;
+}

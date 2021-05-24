@@ -34,14 +34,14 @@ export const columns = [
 ];
 
 export const data = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 20; i++) {
 	data.push({
 		key: i,
 		ModuleID: `${i}`,
 		ModuleName: `Module ${i}`,
-		ModuleSchema: `Module Metadata ${i}`,
+		ModuleSchema: `Module Schema URL... ${i}`,
 		status: i % 2 == 0 ? "Enabled" : "Disabled",
-		isActive: i % 2 == 0 ? "Yes" : "No",
-		
+		isActive: i % 2 == 0 ? "true" : "false",
+		Description: "This is a description section"
 	});
 }

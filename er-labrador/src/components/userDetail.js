@@ -37,7 +37,7 @@ class UserDetail extends Component {
           					size={this.state.size}
         				>
           				<Descriptions.Item label="User ID">{this.state.currRow.UserID}</Descriptions.Item>
-          				<Descriptions.Item label="Full Name">{this.state.currRow.name}</Descriptions.Item>
+          				<Descriptions.Item label="Full Name">{this.state.currRow.Name}</Descriptions.Item>
           				<Descriptions.Item label="Email">{this.state.currRow.Email}</Descriptions.Item>
           				<Descriptions.Item label="Eratos User ID">{this.state.currRow.EratosUserID}</Descriptions.Item>
           				<Descriptions.Item label="Auth0 ID">{this.state.currRow.Auth0ID}</Descriptions.Item>
