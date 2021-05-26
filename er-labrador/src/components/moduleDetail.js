@@ -72,9 +72,11 @@ class ModuleDetail extends Component {
 											oldData.ModuleID;
 										updatedData["key"] = oldData.key;
 										updatedData["isActive"] =
-											values.isActive;
+											values.isActive=== "true"
+												? "Yes"
+												: "No";
 										updatedData["status"] =
-											values.isActive === "Yes"
+											values.isActive === "true"
 												? "Enabled"
 												: "Disabled";
 										// console.log(this.state.currRow, values);
@@ -92,8 +94,8 @@ class ModuleDetail extends Component {
 										isActive:
 											this.state.currRow.isActive ===
 											"true"
-												? "true"
-												: "false",
+												? "Yes"
+												: "No",
 										Description:
 											this.state.currRow.Description,
 									}}
@@ -119,7 +121,15 @@ class ModuleDetail extends Component {
 											name="ModuleSchema"
 											label="Module Schema"
 											placeholder="Please enter schema"
+											rules={[
+												{
+													required: true,
+													message:
+														"Please enter the url of the schema!",
+												},
+											]}
 										/>
+										
 									</ProForm.Group>
 									<ProForm.Group>
 										<ProFormSelect

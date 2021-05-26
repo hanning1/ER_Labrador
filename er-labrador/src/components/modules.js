@@ -165,7 +165,7 @@ class Modules extends Component {
 								},
 							}}
 							trigger={
-								<Button type="primary">
+								<Button type="primary" style={{marginTop: 15 }}>
 									<PlusOutlined />
 									Add
 								</Button>
@@ -210,7 +210,7 @@ class Modules extends Component {
 									width="lg"
 									name="ModuleSchema"
 									label="Module Schema"
-									placeholder="Please enter the url of the schema"
+									placeholder="Please enter the url of the schema!"
 									rules={[
 										{
 											required: true,

@@ -29,8 +29,8 @@ class UserDetail extends Component {
 	render() {
 		return (
 			<div className="common-component">
-				<NavBar defaultSelectedKeys="2">
-					<div className="module-detail-content common-component-content">
+				<NavBar defaultSelectedKeys="3">
+					<div className="user-detail-content common-component-content">
 						<Descriptions
           					bordered
           					title="User Details"

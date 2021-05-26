@@ -38,6 +38,12 @@ export const columns = [
 		key: "2",
 		width: 80,
 	},
+	{
+		title: "Time Used",
+		dataIndex: "TimeUsed",
+		key: "3",
+		width: 80,
+	},
 	
 ];
 var date = new Date();
@@ -48,9 +54,10 @@ for (let i = 0; i < 100; i++) {
 		OrderID: `000${i}`,
 		UserID: `000${i}`,
 		Price: 3*(100-i),
-		Status: i % 2 == 0 ? "Pending" : "Ongoing",
+		Status: i % 2 == 0 ? "Complete" : "Ongoing",
 		PaymentID: `0000000${i}`,
 		OrderTime: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} 
         ${date.getHours()}:${date.getUTCMinutes()}:${date.getSeconds()}`,
+        TimeUsed:i % 2 == 0 ? "0 Hours, 12 Mins" : "Unfinished",
 	});
 }

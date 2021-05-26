@@ -29,8 +29,8 @@ class OrderDetail extends Component {
 	render() {
 		return (
 			<div className="common-component">
-				<NavBar defaultSelectedKeys="2">
-					<div className="module-detail-content common-component-content">
+				<NavBar defaultSelectedKeys="4">
+					<div className="order-detail-content common-component-content">
 						<Descriptions
           					bordered
           					title="Order Details"
@@ -42,6 +42,7 @@ class OrderDetail extends Component {
           				<Descriptions.Item label="User ID">{this.state.currRow.UserID}</Descriptions.Item>
           				<Descriptions.Item label="Payment ID">{this.state.currRow.PaymentID}</Descriptions.Item>
           				<Descriptions.Item label="Time of Order Placed">{this.state.currRow.OrderTime}</Descriptions.Item>
+          				<Descriptions.Item label="Time Used">{this.state.currRow.TimeUsed}</Descriptions.Item>
             			</Descriptions>
 
 					</div>
