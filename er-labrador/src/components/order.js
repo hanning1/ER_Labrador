@@ -25,6 +25,7 @@ class Order extends Component {
 			searchText: "",
 			searchedColumn: "",
 			filteredColumns: [],
+			loading: false,
 		};
 
 		columns.forEach((item) => {
@@ -136,6 +137,7 @@ class Order extends Component {
 									.toString()
 									.includes(this.state.searchText);
 							})}
+							loading={this.state.loading}
 							scroll={{ x: 1500 }}
 							pagination={{
 								position: ["topLeft"],

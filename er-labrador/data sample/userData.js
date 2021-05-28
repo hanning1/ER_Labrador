@@ -7,7 +7,7 @@ export const columns = [
 		fixed: "left",
 	},
 	{
-		title: "Full Name",
+		title: "Name",
 		width: 100,
 		dataIndex: "Name",
 		key: "name",
@@ -39,11 +39,16 @@ export const columns = [
 		width: 150,
 	},
 	{
+		title: "Info",
+		dataIndex: "Info",
+		width: 150,
+	},
+	{
 		title: "Administrator",
 		dataIndex: "isAdmin",
 		key: "4",
 		width: 150,
-	}
+	},
 ];
 var date = new Date();
 export const data = [];
@@ -52,12 +57,12 @@ for (let i = 0; i < 100; i++) {
 		key: i,
 		UserID: `000${i}`,
 		Name: `Edward ${i}`,
-		EratosUserID : `000${i}`,
-		Auth0ID : `000${i}`,
+		EratosUserID: `000${i}`,
+		Auth0ID: `000${i}`,
 		CreatedAt: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} 
         ${date.getHours()}:${date.getUTCMinutes()}:${date.getSeconds()}`,
 		Email: `edwardid${i}@gmail.com`,
-		isAdmin : i == 0 || i ==1 ? "Yes" : "No",
-		Info : "This is the info section which may contain the description of the user"
+		isAdmin: i == 0 || i == 1 ? "Yes" : "No",
+		Info: "This is the info section which may contain the description of the user",
 	});
 }

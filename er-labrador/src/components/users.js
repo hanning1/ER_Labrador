@@ -14,6 +14,7 @@ import {
 	REACT_APP_ERATOS_TRACKER,
 	REACT_APP_ERATOS_AUTH0_AUD,
 } from "../store/auth0";
+import axios from "axios";
 
 const { Search } = Input;
 
@@ -24,8 +25,43 @@ class Users extends Component {
 			searchText: "",
 			searchedColumn: "",
 			filteredColumns: [],
+			dataSource: [],
+			loading: true,
 		};
+
+		columns.map((item) => {
+			this.state.filteredColumns.push(
+				Object.assign({}, item, {
+					...this.getColumnSearchProps(item.dataIndex),
+					sorter: (a, b) => true,
+					sortDirections: ["descend", "ascend"],
+				})
+			);
+		});
+
+		this.getDataSource()
+			.then((res) => {
+				let result = res.data.UserInfo;
+				result.forEach((item) => {
+					item.isAdmin = item.isAdmin.toString();
+				});
+				this.setState({
+					dataSource: result,
+					loading: false,
+				});
+			})
+			.catch((err) => {
+				console.log("fail to fetch users: ", err);
+				this.setState({ loading: false });
+			});
 	}
+
+	getDataSource = async () => {
+		let res = await axios.get(
+			"https://eratosuombackend.azurewebsites.net/api/getUserInfo?userUri=all&start=1&end=100&code=cT7R1kpoixw6jeEaCxK488gdl3BjDW5C7YgysAnj0S3Ybkay0Gx0xg=="
+		);
+		return res;
+	};
 
 	getUserId = async (pnToken) => {
 		const headers = {
@@ -84,18 +120,6 @@ class Users extends Component {
 		user["id"] = userId;
 
 		if (this.props.user !== user) this.props.updateUser(user);
-
-		var filteredColumns = [];
-		columns.map((item) => {
-			filteredColumns.push(
-				Object.assign({}, item, {
-					...this.getColumnSearchProps(item.dataIndex),
-					sorter: (a, b) => true,
-					sortDirections: ["descend", "ascend"],
-				})
-			);
-		});
-		this.setState({ filteredColumns: filteredColumns });
 	};
 
 	// onChange = (pagination, filters, sorter, extra) => {
@@ -132,11 +156,12 @@ class Users extends Component {
 						/>
 						<Table
 							columns={this.state.filteredColumns}
-							dataSource={data.filter((item) => {
+							dataSource={this.state.dataSource.filter((item) => {
 								return Object.values(item)
 									.toString()
 									.includes(this.state.searchText);
 							})}
+							loading={this.state.loading}
 							scroll={{ x: 1500 }}
 							pagination={{
 								position: ["topLeft"],

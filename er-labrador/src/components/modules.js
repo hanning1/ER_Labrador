@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
 import { UPDATE_USER } from "../store/actionTypes";
-import axios from 'axios';
+import axios from "axios";
 import NavBar from "./navBar";
 import "../styles/index.css";
 import { Table, Input, Button, Space, Switch, message } from "antd";
@@ -32,9 +32,8 @@ class Modules extends Component {
 			searchedColumn: "",
 			filteredColumns: [],
 			dataSource: [],
-			//dataSource: data,
+			loading: true,
 		};
-		
 
 		columns.forEach((item) => {
 			if (item.key !== "operation" && item.key !== "1") {
@@ -59,7 +58,7 @@ class Modules extends Component {
 										checkedChildren="On"
 										unCheckedChildren="Off"
 										defaultChecked={
-											record.status === "Enabled"
+											record.isActive === true
 										}
 										onClick={(checked, e) => {
 											e.stopPropagation();
@@ -76,15 +75,24 @@ class Modules extends Component {
 				);
 			}
 		});
+
+		this.getDataSource()
+			.then((res) => {
+				// console.log(res);
+				this.setState({ dataSource: res.data.Modules, loading: false });
+			})
+			.catch((err) => {
+				console.log("fail to fetch data: ", err);
+				this.setState({ loading: false });
+			});
 	}
 
-	getDataSource =()=>{
-		axios.get('https://eratosuombackend.azurewebsites.net/api/getAllModules?start=1&end=10&code=JtAQchbEMtFZ6wX2Cef1FAnlxy6vfPo9o06eNqMaEKKjGoUZIDJ8Cw==').then(
-		response=>{this.setState({dataSource:response.data.Modules })},
-		error=>{console.log('failed fetching data',error);}
-
-	);
-	}
+	getDataSource = async () => {
+		let res = await axios.get(
+			"https://eratosuombackend.azurewebsites.net/api/getAllModules?start=1&end=10&code=JtAQchbEMtFZ6wX2Cef1FAnlxy6vfPo9o06eNqMaEKKjGoUZIDJ8Cw=="
+		);
+		return res;
+	};
 
 	getUserId = async (pnToken) => {
 		const headers = {
@@ -134,7 +142,6 @@ class Modules extends Component {
 	});
 
 	componentDidMount = () => {
-		this.getDataSource();
 		const { user } = this.props.auth0;
 		if (this.props.user !== user) this.props.updateUser(user);
 	};
@@ -176,7 +183,10 @@ class Modules extends Component {
 								},
 							}}
 							trigger={
-								<Button type="primary" style={{marginTop: 15 }}>
+								<Button
+									type="primary"
+									style={{ marginTop: 15 }}
+								>
 									<PlusOutlined />
 									Add
 								</Button>
@@ -264,6 +274,7 @@ class Modules extends Component {
 									.toString()
 									.includes(this.state.searchText);
 							})}
+							loading={this.state.loading}
 							scroll={{ x: 1500 }}
 							pagination={{
 								position: ["topLeft"],
