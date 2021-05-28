@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Route, Redirect } from "react-router";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
 import { UPDATE_USER } from "../store/actionTypes";
-
+import axios from 'axios';
 import NavBar from "./navBar";
 import "../styles/index.css";
 import { Table, Input, Button, Space, Switch, message } from "antd";
@@ -31,8 +31,10 @@ class Modules extends Component {
 			searchText: "",
 			searchedColumn: "",
 			filteredColumns: [],
-			dataSource: data,
+			dataSource: [],
+			//dataSource: data,
 		};
+		
 
 		columns.forEach((item) => {
 			if (item.key !== "operation" && item.key !== "1") {
@@ -74,6 +76,14 @@ class Modules extends Component {
 				);
 			}
 		});
+	}
+
+	getDataSource =()=>{
+		axios.get('https://eratosuombackend.azurewebsites.net/api/getAllModules?start=1&end=10&code=JtAQchbEMtFZ6wX2Cef1FAnlxy6vfPo9o06eNqMaEKKjGoUZIDJ8Cw==').then(
+		response=>{this.setState({dataSource:response.data.Modules })},
+		error=>{console.log('failed fetching data',error);}
+
+	);
 	}
 
 	getUserId = async (pnToken) => {
@@ -124,6 +134,7 @@ class Modules extends Component {
 	});
 
 	componentDidMount = () => {
+		this.getDataSource();
 		const { user } = this.props.auth0;
 		if (this.props.user !== user) this.props.updateUser(user);
 	};
