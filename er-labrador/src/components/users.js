@@ -5,7 +5,7 @@ import { UPDATE_USER } from "../store/actionTypes";
 
 import NavBar from "./navBar";
 import "../styles/index.css";
-import { Table, Input, Button, Space } from "antd";
+import { Table, Input } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { columns, data } from "../../data sample/userData";

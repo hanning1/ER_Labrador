@@ -13,8 +13,6 @@ import {
 } from "../store/auth0";
 import axios from "axios";
 
-const { Search } = Input;
-
 class UserProfile extends Component {
 	constructor(props) {
 		super(props);

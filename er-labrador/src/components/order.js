@@ -3,10 +3,9 @@ import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
 import { UPDATE_USER } from "../store/actionTypes";
 import { columns, data } from "../../data sample/orderData";
-import { Table, Input, Button, Space } from "antd";
+import { Table, Input } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 
 import NavBar from "./navBar";
 import "../styles/index.css";

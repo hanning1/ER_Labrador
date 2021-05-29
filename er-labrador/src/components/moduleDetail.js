@@ -5,16 +5,11 @@ import { UPDATE_USER } from "../store/actionTypes";
 
 import NavBar from "./navBar";
 import "../styles/index.css";
-import { Descriptions, Table, Input, Button, Space, message } from "antd";
-import { Button as RBButton } from "react-bootstrap";
+import { Descriptions, Button, message } from "antd";
 import axios from "axios";
 
 import ProForm, {
 	ModalForm,
-	DrawerForm,
-	QueryFilter,
-	LightFilter,
-	StepsForm,
 	ProFormText,
 	ProFormTextArea,
 	ProFormSelect,

@@ -4,7 +4,6 @@ import { withAuth0 } from "@auth0/auth0-react";
 import { UPDATE_COLLAPSE, UPDATE_USER } from "../store/actionTypes";
 import { Menu, Button, Layout, Avatar, Input, Image } from "antd";
 import {
-	AppstoreOutlined,
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
 	OrderedListOutlined,
@@ -12,13 +11,11 @@ import {
 	ControlOutlined,
 	UserOutlined,
 } from "@ant-design/icons";
-const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
 import "antd/dist/antd.css";
 import "../styles/navBar.css";
-import { Redirect, withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 import logo from "../ui/eratos.png";
 
 class NavBar extends Component {
@@ -44,13 +41,6 @@ class NavBar extends Component {
 				<Layout>
 					<Sider
 						breakpoint="lg"
-						// collapsedWidth="0"
-						// onBreakpoint={(broken) => {
-						// 	console.log(broken);
-						// }}
-						// onCollapse={(collapsed, type) => {
-						// 	console.log(collapsed, type);
-						// }}
 						trigger={null}
 						collapsible
 						collapsed={
@@ -69,10 +59,8 @@ class NavBar extends Component {
 									? this.props.defaultSelectedKeys
 									: "1",
 							]}
-							// defaultOpenKeys={["sub1"]}
 							mode="inline"
 							theme="dark"
-							// inlineCollapsed={this.state.collapsed}
 						>
 							<Menu.Item
 								key="1"
@@ -101,9 +89,6 @@ class NavBar extends Component {
 							>
 								Users
 							</Menu.Item>
-							{/* <Menu.Item key="3" icon={<ContainerOutlined />}>
-								Orders
-							</Menu.Item> */}
 							<Menu.Item
 								key="4"
 								icon={<OrderedListOutlined />}
@@ -113,34 +98,6 @@ class NavBar extends Component {
 							>
 								Orders
 							</Menu.Item>
-							{/* <SubMenu
-								key="sub1"
-								icon={<OrderedListOutlined />}
-								title="Orders"
-							>
-								<Menu.Item key="4">Ongoing Orders</Menu.Item>
-								<Menu.Item key="5">Completed Orders</Menu.Item>
-								<Menu.Item
-									key="6"
-									onClick={() => {
-										this.props.history.push("/orders");
-									}}
-								>
-									Order General Info
-								</Menu.Item>
-							</SubMenu> */}
-							{/* <SubMenu
-								key="sub2"
-								icon={<AppstoreOutlined />}
-								title="Navigation Two"
-							>
-								<Menu.Item key="9">Option 9</Menu.Item>
-								<Menu.Item key="10">Option 10</Menu.Item>
-								<SubMenu key="sub3" title="Submenu">
-									<Menu.Item key="11">Option 11</Menu.Item>
-									<Menu.Item key="12">Option 12</Menu.Item>
-								</SubMenu>
-							</SubMenu> */}
 						</Menu>
 					</Sider>
 					<Layout>
@@ -164,23 +121,6 @@ class NavBar extends Component {
 										? this.props.user.nickname
 										: "undefined"}
 								</b>
-								{/* {this.props.user ? (
-									<Avatar
-										src={this.props.user.picture}
-										icon={<UserOutlined />}
-									>
-										<Link
-											to={{
-												pathname: `/profile/`,
-												state: {
-													user: this.props.user,
-												},
-											}}
-										></Link>
-									</Avatar>
-								) : (
-									<Avatar icon={<UserOutlined />} />
-								)} */}
 								<Avatar
 									icon={<UserOutlined />}
 									src={this.props.user.picture}

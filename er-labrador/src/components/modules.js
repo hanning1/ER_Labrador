@@ -6,14 +6,11 @@ import { UPDATE_USER } from "../store/actionTypes";
 import axios from "axios";
 import NavBar from "./navBar";
 import "../styles/index.css";
-import { Table, Input, Button, Space, Switch, message } from "antd";
+import { Table, Input, Button, Switch, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Button as RBButton } from "react-bootstrap";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { columns, data } from "../../data sample/moduleData";
-import moduleDetail from "./moduleDetail";
-import { Link } from "react-router-dom";
 
 import ProForm, {
 	ModalForm,
