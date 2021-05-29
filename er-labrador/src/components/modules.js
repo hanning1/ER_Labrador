@@ -32,7 +32,8 @@ class Modules extends Component {
 			searchedColumn: "",
 			filteredColumns: [],
 			dataSource: [],
-			loading: true,
+			tableLoading: true,
+			switchLoading: false,
 		};
 
 		columns.forEach((item) => {
@@ -60,15 +61,31 @@ class Modules extends Component {
 										defaultChecked={
 											record.isActive === true
 										}
+										checked={record.isActive === true}
+										loading={this.state.switchLoading}
 										onClick={async (checked, e) => {
 											e.stopPropagation();
-											console.log(checked.toString());
+											this.setState({
+												switchLoading: true,
+											});
 											let res = await axios.post(
-												`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=https://schemas.eratos.ai/json/person&moduleName=${
+												`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=${
+													record.ModuleSchema
+												}&moduleName=${
 													record.ModuleName
 												}&isActive=${checked.toString()}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
 											);
-											console.log(res);
+											if (res.data.Success === "True") {
+												this.setState({
+													switchLoading: false,
+												});
+											} else {
+												checked = checked;
+												console.log("error");
+												this.setState({
+													switchLoading: false,
+												});
+											}
 										}}
 									/>
 								);
@@ -82,11 +99,14 @@ class Modules extends Component {
 		this.getDataSource()
 			.then((res) => {
 				// console.log(res);
-				this.setState({ dataSource: res.data.Modules, loading: false });
+				this.setState({
+					dataSource: res.data.Modules,
+					tableLoading: false,
+				});
 			})
 			.catch((err) => {
 				console.log("fail to fetch data: ", err);
-				this.setState({ loading: false });
+				this.setState({ tableLoading: false });
 			});
 	}
 
@@ -258,7 +278,7 @@ class Modules extends Component {
 									.toString()
 									.includes(this.state.searchText);
 							})}
-							loading={this.state.loading}
+							loading={this.state.tableLoading}
 							scroll={{ x: 1500 }}
 							pagination={{
 								position: ["topLeft"],
