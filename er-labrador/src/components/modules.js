@@ -60,13 +60,15 @@ class Modules extends Component {
 										defaultChecked={
 											record.isActive === true
 										}
-										onClick={(checked, e) => {
+										onClick={async (checked, e) => {
 											e.stopPropagation();
-											console.log(
-												checked,
-												record.key,
-												"switch clicked"
+											console.log(checked.toString());
+											let res = await axios.post(
+												`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=https://schemas.eratos.ai/json/person&moduleName=${
+													record.ModuleName
+												}&isActive=${checked.toString()}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
 											);
+											console.log(res);
 										}}
 									/>
 								);
