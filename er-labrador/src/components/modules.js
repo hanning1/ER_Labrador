@@ -58,12 +58,9 @@ class Modules extends Component {
 									<Switch
 										checkedChildren="On"
 										unCheckedChildren="Off"
-										defaultChecked={
-											record.isActive === true
-										}
-										checked={record.isActive === true}
 										loading={this.state.switchLoading}
-										onClick={async (checked, e) => {
+										checked={record.isActive}
+										onChange={async (checked, e) => {
 											e.stopPropagation();
 											this.setState({
 												switchLoading: true,
@@ -76,16 +73,21 @@ class Modules extends Component {
 												}&isActive=${checked.toString()}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
 											);
 											if (res.data.Success === "True") {
-												this.setState({
-													switchLoading: false,
-												});
+												record.isActive =
+													!record.isActive;
+												// console.log(
+												// 	"success, current: ",
+												// 	record.isActive
+												// );
 											} else {
-												checked = checked;
-												console.log("error");
-												this.setState({
-													switchLoading: false,
-												});
+												console.log(
+													"error",
+													res.data.Message
+												);
 											}
+											this.setState({
+												switchLoading: false,
+											});
 										}}
 									/>
 								);
