@@ -59,3 +59,7 @@
 .trigger:hover {
 	color: #1890ff;
 }
+
+.ant-avatar:hover {
+	cursor: pointer;
+}

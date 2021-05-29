@@ -63,6 +63,7 @@ class Modules extends Component {
 										onClick={(checked, e) => {
 											e.stopPropagation();
 											console.log(
+												checked,
 												record.key,
 												"switch clicked"
 											);
@@ -92,25 +93,6 @@ class Modules extends Component {
 			"https://eratosuombackend.azurewebsites.net/api/getAllModules?start=1&end=10&code=JtAQchbEMtFZ6wX2Cef1FAnlxy6vfPo9o06eNqMaEKKjGoUZIDJ8Cw=="
 		);
 		return res;
-	};
-
-	getUserId = async (pnToken) => {
-		const headers = {
-			Authorization: "Bearer " + pnToken,
-			Accept: "application/json",
-		};
-
-		const result = await fetch(`${REACT_APP_ERATOS_TRACKER}/auth/me`, {
-			method: "GET",
-			headers,
-		});
-
-		if (result.status >= 200 && result.status < 400) {
-			const data = await result.json();
-			return data?.id;
-		} else {
-			throw await result.json();
-		}
 	};
 
 	getColumnSearchProps = (dataIndex) => ({
