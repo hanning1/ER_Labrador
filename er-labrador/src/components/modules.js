@@ -207,11 +207,20 @@ class Modules extends Component {
 									values.isActive === "true"
 										? "Enabled"
 										: "Disabled";
-								// post method can be created through replacing following code
+								
 								data.push(newData);
 								this.setState({
 									dataSource: data,
 								});
+
+								let res = await axios.post(
+												`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=${
+													values.ModuleSchema
+												}&moduleName=${
+													values.ModuleName
+												}&isActive=${values.isActive}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
+											);
+
 								await this.waitTime();
 								message.success("Successfully added");
 								return true;
@@ -297,6 +306,7 @@ class Modules extends Component {
 											state: {
 												currRow: record,
 											},
+											
 										});
 									},
 								};

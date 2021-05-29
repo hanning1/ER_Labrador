@@ -45,6 +45,8 @@ class ModuleDetail extends Component {
 	};
 
 	render() {
+		console.log(this.state.currRow);
+
 		return (
 			<div className="common-component">
 				<NavBar defaultSelectedKeys="2">
@@ -81,6 +83,7 @@ class ModuleDetail extends Component {
 												: "Disabled";
 										// console.log(this.state.currRow, values);
 										// edit below to post data to backend
+										
 										this.setState({ currRow: values });
 										await this.waitTime();
 										message.success("Successfully edited");
@@ -92,10 +95,7 @@ class ModuleDetail extends Component {
 										ModuleSchema:
 											this.state.currRow.ModuleSchema,
 										isActive:
-											this.state.currRow.isActive ===
-											"true"
-												? "Yes"
-												: "No",
+											this.state.currRow.isActive.toString()=== "true"? "Yes": "No",
 										Description:
 											this.state.currRow.Description,
 									}}
@@ -168,7 +168,7 @@ class ModuleDetail extends Component {
 								{this.state.currRow.ModuleSchema}
 							</Descriptions.Item>
 							<Descriptions.Item label="Active Status">
-								{this.state.currRow.isActive}
+								{this.state.currRow.isActive === true ? "Yes": "No"}
 							</Descriptions.Item>
 							<Descriptions.Item label="Description">
 								{this.state.currRow.Description}
