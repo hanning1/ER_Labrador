@@ -81,7 +81,7 @@ class Modules extends Component {
 												// );
 											} else {
 												console.log(
-													"error",
+													"Error: ",
 													res.data.Message
 												);
 											}
@@ -100,7 +100,6 @@ class Modules extends Component {
 
 		this.getDataSource()
 			.then((res) => {
-				// console.log(res);
 				this.setState({
 					dataSource: res.data.Modules,
 					tableLoading: false,
@@ -114,7 +113,7 @@ class Modules extends Component {
 
 	getDataSource = async () => {
 		let res = await axios.get(
-			"https://eratosuombackend.azurewebsites.net/api/getAllModules?start=1&end=10&code=JtAQchbEMtFZ6wX2Cef1FAnlxy6vfPo9o06eNqMaEKKjGoUZIDJ8Cw=="
+			"https://eratosuombackend.azurewebsites.net/api/getAllModules?start=1&end=100&code=JtAQchbEMtFZ6wX2Cef1FAnlxy6vfPo9o06eNqMaEKKjGoUZIDJ8Cw=="
 		);
 		return res;
 	};
@@ -199,30 +198,23 @@ class Modules extends Component {
 							}
 							onFinish={async (values) => {
 								let data = [...this.state.dataSource];
-								const newData = values;
-								newData["key"] = this.state.dataSource.length;
+								let newData = values;
 								newData["ModuleID"] =
-									this.state.dataSource.length.toString();
-								newData["status"] =
-									values.isActive === "true"
-										? "Enabled"
-										: "Disabled";
-								
-								data.push(newData);
-								this.setState({
-									dataSource: data,
-								});
-
+									this.state.dataSource.length + 1;
 								let res = await axios.post(
-												`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=${
-													values.ModuleSchema
-												}&moduleName=${
-													values.ModuleName
-												}&isActive=${values.isActive}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
-											);
+									`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=${newData.ModuleSchema}&moduleName=${newData.ModuleName}&isActive=${newData.isActive}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
+								);
 
+								if (res.data.Success === "True") {
+									data.push(newData);
+									this.setState({
+										dataSource: data,
+									});
+									message.success("Successfully added");
+								} else {
+									message.error("Error. Something is wrong.");
+								}
 								await this.waitTime();
-								message.success("Successfully added");
 								return true;
 							}}
 						>
@@ -260,8 +252,8 @@ class Modules extends Component {
 							<ProForm.Group>
 								<ProFormSelect
 									options={[
-										{ value: "true", label: "Yes" },
-										{ value: "no", label: "No" },
+										{ value: true, label: "Yes" },
+										{ value: false, label: "No" },
 									]}
 									name="isActive"
 									label="Active Status"
@@ -296,17 +288,16 @@ class Modules extends Component {
 								hideOnSinglePage: true,
 							}}
 							rowKey={(record) => {
-								record.id;
+								record.ModuleID;
 							}}
 							onRow={(record) => {
 								return {
 									onClick: (e) => {
 										this.props.history.push({
-											pathname: `/moduleDetail/${record.key}`,
+											pathname: `/moduleDetail/${record.ModuleID}`,
 											state: {
 												currRow: record,
 											},
-											
 										});
 									},
 								};

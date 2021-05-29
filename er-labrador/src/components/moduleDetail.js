@@ -7,6 +7,7 @@ import NavBar from "./navBar";
 import "../styles/index.css";
 import { Descriptions, Table, Input, Button, Space, message } from "antd";
 import { Button as RBButton } from "react-bootstrap";
+import axios from "axios";
 
 import ProForm, {
 	ModalForm,
@@ -69,24 +70,24 @@ class ModuleDetail extends Component {
 									}
 									onFinish={async (values) => {
 										let oldData = this.state.currRow;
-										let updatedData = values;
-										updatedData["ModuleID"] =
-											oldData.ModuleID;
-										updatedData["key"] = oldData.key;
-										updatedData["isActive"] =
-											values.isActive=== "true"
-												? "Yes"
-												: "No";
-										updatedData["status"] =
-											values.isActive === "true"
-												? "Enabled"
-												: "Disabled";
-										// console.log(this.state.currRow, values);
-										// edit below to post data to backend
-										
-										this.setState({ currRow: values });
+										let newData = values;
+										newData["ModuleID"] = oldData.ModuleID;
+										let res = await axios.post(
+											`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=${newData.ModuleSchema}&moduleName=${newData.ModuleName}&isActive=${newData.isActive}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
+										);
+										if (res.data.Success === "True") {
+											this.setState({
+												currRow: newData,
+											});
+											message.success(
+												"Successfully added"
+											);
+										} else {
+											message.error(
+												"Error. Something is wrong."
+											);
+										}
 										await this.waitTime();
-										message.success("Successfully edited");
 										return true;
 									}}
 									initialValues={{
@@ -95,7 +96,10 @@ class ModuleDetail extends Component {
 										ModuleSchema:
 											this.state.currRow.ModuleSchema,
 										isActive:
-											this.state.currRow.isActive.toString()=== "true"? "Yes": "No",
+											this.state.currRow.isActive.toString() ===
+											"true"
+												? "Yes"
+												: "No",
 										Description:
 											this.state.currRow.Description,
 									}}
@@ -129,13 +133,12 @@ class ModuleDetail extends Component {
 												},
 											]}
 										/>
-										
 									</ProForm.Group>
 									<ProForm.Group>
 										<ProFormSelect
 											options={[
-												{ value: "true", label: "Yes" },
-												{ value: "false", label: "No" },
+												{ value: true, label: "Yes" },
+												{ value: false, label: "No" },
 											]}
 											name="isActive"
 											label="Active Status"
@@ -168,7 +171,9 @@ class ModuleDetail extends Component {
 								{this.state.currRow.ModuleSchema}
 							</Descriptions.Item>
 							<Descriptions.Item label="Active Status">
-								{this.state.currRow.isActive === true ? "Yes": "No"}
+								{this.state.currRow.isActive === true
+									? "Yes"
+									: "No"}
 							</Descriptions.Item>
 							<Descriptions.Item label="Description">
 								{this.state.currRow.Description}
