@@ -13,6 +13,9 @@ Teammates:
 ---
 
 ### How to run the app:
+Before running the app, save the following content in your Hosts file:
+
+127.0.0.1 uom.eratos
 
 cd er-labrador\
 npm install &rarr; This will auto install packages needed in dependencies\
