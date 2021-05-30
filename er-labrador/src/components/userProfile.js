@@ -6,7 +6,7 @@ import { UPDATE_USER } from "../store/actionTypes";
 
 import NavBar from "./navBar";
 import "../styles/index.css";
-import { Table, Input, Button, Space, Form } from "antd";
+import { Input, Button, Switch, Form, message } from "antd";
 import {
 	REACT_APP_ERATOS_TRACKER,
 	REACT_APP_ERATOS_AUTH0_AUD,
@@ -16,7 +16,9 @@ import axios from "axios";
 class UserProfile extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			user: "",
+		};
 	}
 
 	getUserId = async (pnToken) => {
@@ -53,27 +55,56 @@ class UserProfile extends Component {
 		});
 		const userId = await this.getUserId(token);
 		user["id"] = userId;
-
 		if (this.props.user !== user) this.props.updateUser(user);
 
-		// if (this.props.user) {
-		this.getUserInfo(this.props.user.id)
+		this.getUserInfo(user.id)
 			.then((res) => {
-				let result = res.data;
-				console.log("info: ", result, typeof result);
+				let result = res.data.UserInfo;
+				this.setState({ user: result });
 			})
 			.catch((err) => {
 				console.log("error: ", err);
 			});
-		// }
 	};
 
-	onFinish = (values) => {
-		console.log("Success:", values);
+	updateUserInfo = async (user) => {
+		let res = await axios.post(
+			"https://eratosuombackend.azurewebsites.net/api/updateUserInfo?code=Kf4jE2l2oBnAS9dRv1aSrqwt2Z3PrZnvehOoV35LeabG39fMVKy4sQ==",
+			user
+		);
+		return res;
+	};
+
+	onFinish = async (values) => {
+		let newData = this.state.user;
+		newData.Email = values.Email ? values.Email : newData.Email;
+		newData.isAdmin = values.isAdmin ? values.isAdmin : newData.isAdmin;
+		newData.Name = values.Name ? values.Name : newData.Name;
+		let res = await this.updateUserInfo(newData);
+		console.log("rseponse: ", res, newData);
+
+		if (res.data.Success === "True") {
+			this.setState({
+				user: newData,
+			});
+			message.success(res.data.Message);
+		} else {
+			message.error("Error. Something is wrong.");
+		}
+		await this.waitTime();
+		return true;
 	};
 
 	onFinishFailed = (errorInfo) => {
 		console.log("Failed:", errorInfo);
+	};
+
+	waitTime = (time = 100) => {
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(true);
+			}, time);
+		});
 	};
 
 	render() {
@@ -81,9 +112,6 @@ class UserProfile extends Component {
 			labelCol: { span: 2 },
 			wrapperCol: { span: 4 },
 		};
-		// const tailLayout = {
-		// 	wrapperCol: { offset: 8, span: 16 },
-		// };
 		return (
 			<div className="common-component">
 				<NavBar>
@@ -92,20 +120,42 @@ class UserProfile extends Component {
 							{...layout}
 							name="basic"
 							initialValues={{ remember: true }}
-							onFinish={() => this.onFinish}
-							onFinishFailed={() => this.onFinishFailed}
+							onFinish={(values) => this.onFinish(values)}
+							onFinishFailed={(error) =>
+								this.onFinishFailed(error)
+							}
 						>
-							<Form.Item label="Username" name="username">
-								<Input placeholder={this.props.user.nickname} />
-							</Form.Item>
-
-							<Form.Item label="Email" name="email">
-								<Input placeholder={this.props.user.email} />
-							</Form.Item>
-
-							<Form.Item label="Update time" name="updateTime">
+							<Form.Item label="Name" name="Name">
 								<Input
-									placeholder={this.props.user.updated_at}
+									placeholder={
+										this.state.user.Name
+											? this.state.user.Name
+											: "None"
+									}
+								/>
+							</Form.Item>
+
+							<Form.Item label="Email" name="Email">
+								<Input
+									placeholder={
+										this.state.user.Email
+											? this.state.user.Email
+											: "None"
+									}
+								/>
+							</Form.Item>
+
+							<Form.Item label="Is Admin" name="isAdmin">
+								<Switch
+									checked={this.state.user.isAdmin}
+									onChange={(checked, e) => {
+										let data = Object.assign(
+											{},
+											this.state.user,
+											{ isAdmin: checked }
+										);
+										this.setState({ user: data });
+									}}
 								/>
 							</Form.Item>
 

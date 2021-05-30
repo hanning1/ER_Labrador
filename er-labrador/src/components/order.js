@@ -14,6 +14,7 @@ import {
 	REACT_APP_ERATOS_TRACKER,
 	REACT_APP_ERATOS_AUTH0_AUD,
 } from "../store/auth0";
+import axios from "axios";
 
 const { Search } = Input;
 
@@ -24,6 +25,7 @@ class Order extends Component {
 			searchText: "",
 			searchedColumn: "",
 			filteredColumns: [],
+			dataSource: [],
 			loading: false,
 		};
 
@@ -36,7 +38,27 @@ class Order extends Component {
 				})
 			);
 		});
+
+		this.getDataSource()
+			.then((res) => {
+				let result = res.data.Orders;
+				this.setState({
+					dataSource: result,
+					loading: false,
+				});
+			})
+			.catch((err) => {
+				console.log("fail to fetch orders: ", err);
+				this.setState({ loading: false });
+			});
 	}
+
+	getDataSource = async () => {
+		let res = await axios.get(
+			"https://eratosuombackend.azurewebsites.net/api/getAllOrders?start=1&end=100&code=zvCE26yqfujAXxdehKpf6zsSghVs/aTLOV6t7E2DB7NY7Uu1jgFk4g=="
+		);
+		return res;
+	};
 
 	getUserId = async (pnToken) => {
 		const headers = {
@@ -131,7 +153,7 @@ class Order extends Component {
 						/>
 						<Table
 							columns={this.state.filteredColumns}
-							dataSource={data.filter((item) => {
+							dataSource={this.state.dataSource.filter((item) => {
 								return Object.values(item)
 									.toString()
 									.includes(this.state.searchText);
