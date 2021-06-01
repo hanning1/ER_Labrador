@@ -56,17 +56,18 @@ The library package includes but not limited to the following:
   - Update the admin profile
 
 **Scope**
-In scope
 
+In scope
   - The Module control space page
   - The Users page
   - The Orders page
-Out of scope
 
+Out of scope
   - The Dashboard page (to be finished)
 
 Detailed description and demonstration can be found at:
 https://confluence.cis.unimelb.edu.au:8443/display/COMP900822021SM1ER/Home
+
 ---
 
 ### How to run the app:
