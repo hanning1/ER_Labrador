@@ -11,6 +11,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { columns, data } from "../../data sample/moduleData";
+import { getAllModules, createModifyModule } from "../store/api";
 
 import ProForm, {
 	ModalForm,
@@ -62,12 +63,15 @@ class Modules extends Component {
 											this.setState({
 												switchLoading: true,
 											});
-											let res = await axios.post(
-												`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=${
-													record.ModuleSchema
-												}&moduleName=${
-													record.ModuleName
-												}&isActive=${checked.toString()}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
+											let payload = {
+												moduleSchema:
+													record.ModuleSchema,
+												moduleName: record.ModuleName,
+												isActive: checked,
+												Description: record.Description,
+											};
+											let res = await createModifyModule(
+												payload
 											);
 											if (res.data.Success === "True") {
 												record.isActive =
@@ -95,7 +99,7 @@ class Modules extends Component {
 			}
 		});
 
-		this.getDataSource()
+		getAllModules(1, 100)
 			.then((res) => {
 				this.setState({
 					dataSource: res.data.Modules,
@@ -107,13 +111,6 @@ class Modules extends Component {
 				this.setState({ tableLoading: false });
 			});
 	}
-
-	getDataSource = async () => {
-		let res = await axios.get(
-			"https://eratosuombackend.azurewebsites.net/api/getAllModules?start=1&end=100&code=JtAQchbEMtFZ6wX2Cef1FAnlxy6vfPo9o06eNqMaEKKjGoUZIDJ8Cw=="
-		);
-		return res;
-	};
 
 	getColumnSearchProps = (dataIndex) => ({
 		filterIcon: (filtered) => (
@@ -198,9 +195,13 @@ class Modules extends Component {
 								let newData = values;
 								newData["ModuleID"] =
 									this.state.dataSource.length + 1;
-								let res = await axios.post(
-									`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=${newData.ModuleSchema}&moduleName=${newData.ModuleName}&isActive=${newData.isActive}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
-								);
+								let payload = {
+									moduleSchema: newData.ModuleSchema,
+									moduleName: newData.ModuleName,
+									isActive: newData.isActive,
+									Description: newData.Description,
+								};
+								let res = await createModifyModule(payload);
 
 								if (res.data.Success === "True") {
 									data.push(newData);
@@ -208,11 +209,12 @@ class Modules extends Component {
 										dataSource: data,
 									});
 									message.success("Successfully added");
+									await this.waitTime();
+									return true;
 								} else {
+									console.log(res.data);
 									message.error("Error. Something is wrong.");
 								}
-								await this.waitTime();
-								return true;
 							}}
 						>
 							<ProForm.Group>
@@ -269,6 +271,13 @@ class Modules extends Component {
 								name="Description"
 								label="Description"
 								placeholder="Please enter description here"
+								rules={[
+									{
+										required: true,
+										message:
+											"You have to enter some descriptions here!",
+									},
+								]}
 							/>
 						</ModalForm>
 						<Table

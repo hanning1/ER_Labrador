@@ -6,6 +6,7 @@ import { UPDATE_USER } from "../store/actionTypes";
 import NavBar from "./navBar";
 import "../styles/index.css";
 import { Descriptions, Button, message } from "antd";
+import { createModifyModule } from "../store/api";
 import axios from "axios";
 
 import ProForm, {
@@ -67,9 +68,23 @@ class ModuleDetail extends Component {
 										let oldData = this.state.currRow;
 										let newData = values;
 										newData["ModuleID"] = oldData.ModuleID;
-										let res = await axios.post(
-											`https://eratosuombackend.azurewebsites.net/api/createModifyModule?moduleSchema=${newData.ModuleSchema}&moduleName=${newData.ModuleName}&isActive=${newData.isActive}&code=T2C73vlWSk2u5gcG2FH2URhZG4Wl15LAFULFiJEGJ2v0ETrMQMUzjA==`
+										if (newData.isActive === "Yes") {
+											newData.isActive = true;
+										} else if (newData.isActive === "No") {
+											newData.isActive = false;
+										} else
+											newData.isActive = newData.isActive;
+										let payload = {
+											moduleSchema: newData.ModuleSchema,
+											moduleName: newData.ModuleName,
+											isActive: newData.isActive,
+											Description: newData.Description,
+										};
+										console.log(payload);
+										let res = await createModifyModule(
+											payload
 										);
+										console.log(res);
 										if (res.data.Success === "True") {
 											this.setState({
 												currRow: newData,

@@ -9,6 +9,7 @@ import { Table, Input } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import { columns, data } from "../../data sample/userData";
+import { getAllUsers } from "../store/api";
 
 import {
 	REACT_APP_ERATOS_TRACKER,
@@ -39,7 +40,7 @@ class Users extends Component {
 			);
 		});
 
-		this.getDataSource()
+		getAllUsers(1, 100)
 			.then((res) => {
 				let result = res.data.UserInfo;
 				result.forEach((item) => {
@@ -55,13 +56,6 @@ class Users extends Component {
 				this.setState({ loading: false });
 			});
 	}
-
-	getDataSource = async () => {
-		let res = await axios.get(
-			"https://eratosuombackend.azurewebsites.net/api/getUserInfo?userUri=all&start=1&end=100&code=cT7R1kpoixw6jeEaCxK488gdl3BjDW5C7YgysAnj0S3Ybkay0Gx0xg=="
-		);
-		return res;
-	};
 
 	getUserId = async (pnToken) => {
 		const headers = {

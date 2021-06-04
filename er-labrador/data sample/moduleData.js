@@ -25,6 +25,12 @@ export const columns = [
 		width: 100,
 	},
 	{
+		title: "Module Description",
+		dataIndex: "Description",
+		key: "Description",
+		width: 100,
+	},
+	{
 		title: "Active Status",
 		key: "operation",
 		dataIndex: "",
@@ -42,6 +48,6 @@ for (let i = 0; i < 20; i++) {
 		ModuleSchema: `Module Schema URL... ${i}`,
 		status: i % 2 == 0 ? "Enabled" : "Disabled",
 		isActive: i % 2 == 0 ? "true" : "false",
-		Description: "This is a description section"
+		Description: "This is a description section",
 	});
 }

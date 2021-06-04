@@ -12,6 +12,7 @@ import {
 	REACT_APP_ERATOS_AUTH0_AUD,
 } from "../store/auth0";
 import axios from "axios";
+import { updateUserInfo } from "../store/api";
 
 class UserProfile extends Component {
 	constructor(props) {
@@ -67,20 +68,12 @@ class UserProfile extends Component {
 			});
 	};
 
-	updateUserInfo = async (user) => {
-		let res = await axios.post(
-			"https://eratosuombackend.azurewebsites.net/api/updateUserInfo?code=Kf4jE2l2oBnAS9dRv1aSrqwt2Z3PrZnvehOoV35LeabG39fMVKy4sQ==",
-			user
-		);
-		return res;
-	};
-
 	onFinish = async (values) => {
 		let newData = this.state.user;
 		newData.Email = values.Email ? values.Email : newData.Email;
 		newData.isAdmin = values.isAdmin ? values.isAdmin : newData.isAdmin;
 		newData.Name = values.Name ? values.Name : newData.Name;
-		let res = await this.updateUserInfo(newData);
+		let res = await updateUserInfo(newData);
 		console.log("rseponse: ", res, newData);
 
 		if (res.data.Success === "True") {

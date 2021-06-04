@@ -15,6 +15,7 @@ import {
 	REACT_APP_ERATOS_AUTH0_AUD,
 } from "../store/auth0";
 import axios from "axios";
+import { getAllOrders } from "../store/api";
 
 const { Search } = Input;
 
@@ -39,7 +40,7 @@ class Order extends Component {
 			);
 		});
 
-		this.getDataSource()
+		getAllOrders(1, 100)
 			.then((res) => {
 				let result = res.data.Orders;
 				this.setState({
@@ -52,13 +53,6 @@ class Order extends Component {
 				this.setState({ loading: false });
 			});
 	}
-
-	getDataSource = async () => {
-		let res = await axios.get(
-			"https://eratosuombackend.azurewebsites.net/api/getAllOrders?start=1&end=100&code=zvCE26yqfujAXxdehKpf6zsSghVs/aTLOV6t7E2DB7NY7Uu1jgFk4g=="
-		);
-		return res;
-	};
 
 	getUserId = async (pnToken) => {
 		const headers = {

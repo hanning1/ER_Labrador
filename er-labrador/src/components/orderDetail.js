@@ -15,15 +15,13 @@ class OrderDetail extends Component {
 			searchText: "",
 			searchedColumn: "",
 			currRow: props.location.state.currRow,
-			size: 'default',
+			size: "default",
 		};
-
 	}
 
 	componentDidMount = () => {
 		const { user } = this.props.auth0;
 		if (this.props.user !== user) this.props.updateUser(user);
-		console.log("successful");
 	};
 
 	render() {
@@ -32,19 +30,32 @@ class OrderDetail extends Component {
 				<NavBar defaultSelectedKeys="4">
 					<div className="order-detail-content common-component-content">
 						<Descriptions
-          					bordered
-          					title="Order Details"
-          					size={this.state.size}
-        				>
-          				<Descriptions.Item label="Order ID">{this.state.currRow.OrderID}</Descriptions.Item>
-          				<Descriptions.Item label="Price">{this.state.currRow.Price}</Descriptions.Item>
-          				<Descriptions.Item label="Status">{this.state.currRow.Status}</Descriptions.Item>
-          				<Descriptions.Item label="User ID">{this.state.currRow.UserID}</Descriptions.Item>
-          				<Descriptions.Item label="Payment ID">{this.state.currRow.PaymentID}</Descriptions.Item>
-          				<Descriptions.Item label="Time of Order Placed">{this.state.currRow.OrderTime}</Descriptions.Item>
-          				<Descriptions.Item label="Time Used">{this.state.currRow.TimeUsed}</Descriptions.Item>
-            			</Descriptions>
-
+							bordered
+							title="Order Details"
+							size={this.state.size}
+						>
+							<Descriptions.Item label="Order ID">
+								{this.state.currRow.OrderID}
+							</Descriptions.Item>
+							<Descriptions.Item label="Price">
+								{this.state.currRow.Price}
+							</Descriptions.Item>
+							<Descriptions.Item label="Status">
+								{this.state.currRow.Status}
+							</Descriptions.Item>
+							<Descriptions.Item label="User ID">
+								{this.state.currRow.UserID}
+							</Descriptions.Item>
+							<Descriptions.Item label="Payment ID">
+								{this.state.currRow.PaymentID}
+							</Descriptions.Item>
+							<Descriptions.Item label="Time of Order Placed">
+								{this.state.currRow.OrderTime}
+							</Descriptions.Item>
+							<Descriptions.Item label="Time Used">
+								{this.state.currRow.TimeUsed}
+							</Descriptions.Item>
+						</Descriptions>
 					</div>
 				</NavBar>
 			</div>
