@@ -3,8 +3,8 @@
 const webpack = require("webpack"); //增加导入webpack
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-	.BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+	require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
@@ -101,8 +101,7 @@ module.exports = {
 		],
 	},
 	plugins: [
-		// new CleanWebpackPlugin(),
-		new BundleAnalyzerPlugin(),
+		// new BundleAnalyzerPlugin(),
 		// plugins中增加下面内容，实例化热加载插件
 		// new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebPackPlugin({

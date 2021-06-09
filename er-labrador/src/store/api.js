@@ -1,12 +1,12 @@
 import axios from "axios";
 
-export const SERVER_ADDRESS = "https://eratosuombackend.azurewebsites.net/api/";
-export const CODE = "pC04Se3EKKG7Is6PPO3az2Idtzg6gJEFrTVbvpOIKh0JXfd9itviGQ==";
-export const GET_USER_INFO = "getUserInfo";
-export const UPDATE_USER_INFO = "updateUserInfo";
-export const CREATE_MODIFY_MODULE = "createModifyModule";
-export const GET_ALL_MODULES = "getAllModules";
-export const GET_ALL_ORDERS = "getAllOrders";
+const SERVER_ADDRESS = "https://eratosuombackend.azurewebsites.net/api/";
+const CODE = "pC04Se3EKKG7Is6PPO3az2Idtzg6gJEFrTVbvpOIKh0JXfd9itviGQ==";
+const GET_USER_INFO = "getUserInfo";
+const UPDATE_USER_INFO = "updateUserInfo";
+const CREATE_MODIFY_MODULE = "createModifyModule";
+const GET_ALL_MODULES = "getAllModules";
+const GET_ALL_ORDERS = "getAllOrders";
 
 export const getAllModules = async (start, end) => {
 	let res = await axios.get(
