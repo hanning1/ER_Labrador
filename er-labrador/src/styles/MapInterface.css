@@ -1,0 +1,46 @@
+#map { 
+    position:absolute; 
+    left:250px ; 
+    top:66px; 
+    bottom:0px; 
+    right:0px;
+}
+
+.geocoder {
+    position:absolute;
+    z-index:1;
+    width:100%;
+    left:240px;
+    top:100px;
+}
+.calculation-box {
+    height: 85px;
+    width: 150px;
+    position: absolute;
+    bottom: 40px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    text-align: center;
+}
+p {
+    font-family: 'Open Sans';
+    margin: 0;
+    font-size: 13px;
+}
+.mapboxgl-ctrl-geocoder { 
+    min-width:100%; 
+}
+
+#map-style-menu {
+    position: absolute;
+    left: 250px;
+    bottom: 30px;
+    background: #fff;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+

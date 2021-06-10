@@ -1,0 +1,30 @@
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.about {
+    margin-left: 10px;
+}
+
+.privacy {
+    margin-left: 10px;
+}
+
+.leftbox {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 5px;
+    background-color: transparent;
+}
+
+.rightbox {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 5px;
+    background-color: transparent;
+}

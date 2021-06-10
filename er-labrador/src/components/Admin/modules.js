@@ -300,7 +300,7 @@ class Modules extends Component {
 								return {
 									onClick: (e) => {
 										this.props.history.push({
-											pathname: `/moduleDetail/${record.ModuleID}`,
+											pathname: `/Admin/moduleDetail/${record.ModuleID}`,
 											state: {
 												currRow: record,
 											},

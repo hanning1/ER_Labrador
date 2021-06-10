@@ -6,6 +6,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const BundleAnalyzerPlugin =
 	require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const fs = require("fs");
 
 module.exports = {
 	mode: "development",
@@ -25,6 +26,7 @@ module.exports = {
 		},
 		historyApiFallback: true,
 	},
+
 	entry: {
 		index: path.join(__dirname, "./src/index.js"),
 	},
@@ -104,6 +106,9 @@ module.exports = {
 	],
 	resolve: {
 		extensions: [".wasm", ".mjs", ".js", ".json", ".jsx"],
+		fallback: {
+			fs: false,
+		},
 	},
 	optimization: {
 		splitChunks: {
