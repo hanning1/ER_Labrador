@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { UPDATE_USER } from "../store/actionTypes";
-
-import NavBar from "./navBar";
-import "../styles/index.css";
+import { UPDATE_USER } from "../../store/actionTypes";
+import { columns, data } from "../../../data sample/orderData";
 import { Table, Input } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
-import { columns, data } from "../../data sample/userData";
-import { getAllUsers } from "../store/api";
+
+import NavBar from "./navBar";
+import "../../styles/index.css";
 
 import {
 	REACT_APP_ERATOS_TRACKER,
 	REACT_APP_ERATOS_AUTH0_AUD,
-} from "../store/auth0";
+} from "../../store/auth0";
 import axios from "axios";
+import { getAllOrders } from "../../store/api";
 
 const { Search } = Input;
 
-class Users extends Component {
+class Order extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -30,9 +30,9 @@ class Users extends Component {
 			loading: true,
 		};
 
-		columns.map((item) => {
+		columns.forEach((item) => {
 			this.state.filteredColumns.push(
-				Object.assign({}, item, {
+				Object.assign(item, {
 					...this.getColumnSearchProps(item.dataIndex),
 					sorter: (a, b) => true,
 					sortDirections: ["descend", "ascend"],
@@ -40,19 +40,16 @@ class Users extends Component {
 			);
 		});
 
-		getAllUsers(1, 100)
+		getAllOrders(1, 100)
 			.then((res) => {
-				let result = res.data.UserInfo;
-				result.forEach((item) => {
-					item.isAdmin = item.isAdmin.toString();
-				});
+				let result = res.data.Orders;
 				this.setState({
 					dataSource: result,
 					loading: false,
 				});
 			})
 			.catch((err) => {
-				console.log("fail to fetch users: ", err);
+				console.log("fail to fetch orders: ", err);
 				this.setState({ loading: false });
 			});
 	}
@@ -116,10 +113,6 @@ class Users extends Component {
 		if (this.props.user !== user) this.props.updateUser(user);
 	};
 
-	// onChange = (pagination, filters, sorter, extra) => {
-	// 	console.log("params", pagination, filters, sorter, extra);
-	// };
-
 	handleSearch = (selectedKeys, confirm, dataIndex) => {
 		confirm();
 		this.setState({
@@ -133,11 +126,15 @@ class Users extends Component {
 		this.setState({ searchText: "" });
 	};
 
+	componentWillUnmount = () => {
+		this.setState({ filteredColumns: [] });
+	};
+
 	render() {
 		return (
 			<div className="common-component">
-				<NavBar defaultSelectedKeys="3">
-					<div className="users-content common-component-content">
+				<NavBar defaultSelectedKeys="4">
+					<div className="order-content common-component-content">
 						<Search
 							placeholder="Input search text"
 							allowClear
@@ -168,7 +165,7 @@ class Users extends Component {
 								return {
 									onClick: (e) => {
 										this.props.history.push({
-											pathname: `/userDetail/${record.key}`,
+											pathname: `/orderDetail/${record.key}`,
 											state: {
 												currRow: record,
 											},
@@ -202,4 +199,4 @@ const dispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(stateToProps, dispatchToProps)(withAuth0(Users));
+export default connect(stateToProps, dispatchToProps)(withAuth0(Order));

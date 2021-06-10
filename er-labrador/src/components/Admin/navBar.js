@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { UPDATE_COLLAPSE, UPDATE_USER } from "../store/actionTypes";
+import { UPDATE_COLLAPSE, UPDATE_USER } from "../../store/actionTypes";
 import { Menu, Button, Layout, Avatar, Input, Image } from "antd";
 import {
 	MenuUnfoldOutlined,
@@ -14,9 +14,9 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 
 import "antd/dist/antd.css";
-import "../styles/navBar.css";
+import "../../styles/navBar.css";
 import { withRouter } from "react-router";
-import logo from "../ui/eratos.png";
+import logo from "../../ui/eratos.png";
 
 class NavBar extends Component {
 	constructor(props) {

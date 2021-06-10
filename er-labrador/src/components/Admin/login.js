@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "react-bootstrap";
 
-import "../styles/login.css";
+import "../../styles/login.css";
 import Home from "./home";
 import { connect } from "react-redux";
 import Loading from "./loading";
-import logo from "../ui/logo.png";
+import logo from "../../ui/logo.png";
 
 const Login = (props) => {
 	const { isLoading, isAuthenticated, error, loginWithRedirect } = useAuth0();

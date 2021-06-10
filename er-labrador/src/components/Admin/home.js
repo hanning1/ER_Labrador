@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { UPDATE_USER } from "../store/actionTypes";
+import { UPDATE_USER } from "../../store/actionTypes";
 
 import NavBar from "./navBar";
-import "../styles/index.css";
+import "../../styles/index.css";
 
 import ReactJson from "react-json-view";
 import {
 	REACT_APP_ERATOS_TRACKER,
 	REACT_APP_ERATOS_AUTH0_AUD,
-} from "../store/auth0";
+} from "../../store/auth0";
 
 class Home extends Component {
 	constructor(props) {

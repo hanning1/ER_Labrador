@@ -6,8 +6,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 import {
-	DOMAIN_NAME,
-	CLIENT_ID,
 	REDIRECT_URI,
 	REACT_APP_ERATOS_AUTH0_AUD,
 	REACT_APP_ERATOS_AUTH0_DOMAIN,
@@ -16,15 +14,15 @@ import {
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/index.css";
-import Login from "././components/login";
-import Home from "./components/home";
-import Order from "./components/order";
-import OrderDetail from "./components/orderDetail";
-import Users from "./components/users";
-import Modules from "./components/modules";
-import ModuleDetail from "./components/moduleDetail";
-import UserDetail from "./components/userDetail";
-import UserProfile from "./components/userProfile";
+import Login from "././components/Admin/login";
+import Home from "./components/Admin/home";
+import Order from "./components/Admin/order";
+import OrderDetail from "./components/Admin/orderDetail";
+import Users from "./components/Admin/users";
+import Modules from "./components/Admin/modules";
+import ModuleDetail from "./components/Admin/moduleDetail";
+import UserDetail from "./components/Admin/userDetail";
+import UserProfile from "./components/Admin/userProfile";
 
 export const history = createBrowserHistory();
 
