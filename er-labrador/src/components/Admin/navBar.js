@@ -25,6 +25,7 @@ class NavBar extends Component {
 
 	// if logged out, return to the home page
 	logout = (e) => {
+		console.log(window.location.origin);
 		this.props.auth0.logout({
 			returnTo: window.location.origin,
 		});
