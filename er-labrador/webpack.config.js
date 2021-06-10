@@ -75,7 +75,9 @@ module.exports = {
 		],
 	},
 	plugins: [
-		// new BundleAnalyzerPlugin(),
+		// new CleanWebpackPlugin(),
+		new BundleAnalyzerPlugin(),
+		// plugins中增加下面内容，实例化热加载插件
 		// new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebPackPlugin({
 			template: "public/index.html",

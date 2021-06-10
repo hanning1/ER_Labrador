@@ -62,50 +62,19 @@ const App = (
 		useRefreshTokens={true}
 	>
 		<Provider store={store}>
-			<Router history={hashHistory}>
-				{/* Admin Side */}
-				<Route path={Admin + "/"} exact component={AdminLogin} />
-				<ProtectedRoute path={Admin + "/home"} component={AdminHome} />
+			<Router>
+				<Route path="/" exact component={Login} />
+				<ProtectedRoute path="/home" component={Home} />
+				<ProtectedRoute path="/orderDetail" component={OrderDetail} />
+				<ProtectedRoute path="/orders" component={Order} />
+				<ProtectedRoute path="/userDetail/:id" component={UserDetail} />
+				<ProtectedRoute path="/users" component={Users} />
 				<ProtectedRoute
-					path={Admin + "/orderDetail/:id"}
-					component={OrderDetail}
-				/>
-				<ProtectedRoute path={Admin + "/orders"} component={Order} />
-				<ProtectedRoute
-					path={Admin + "/userDetail/:id"}
-					component={UserDetail}
-				/>
-				<ProtectedRoute path={Admin + "/users"} component={Users} />
-				<ProtectedRoute
-					path={Admin + "/moduleDetail/:id"}
+					path="/moduleDetail/:id"
 					component={ModuleDetail}
 				/>
-				<ProtectedRoute path={Admin + "/modules"} component={Modules} />
-				<ProtectedRoute
-					path={Admin + "/profile"}
-					component={UserProfile}
-				/>
-				{/* User Side */}
-				<Route path="/" exact render={() => <Redirect to="/app" />} />
-
-				<Route path="/app" component={UserApp} />
-
-				<Route path="/home" component={UserHome} />
-				<Route path="/history" component={BasicTable} />
-				<Route path="/login" component={UserLogin} />
-				<Route path="/result" component={Result} />
-				<Elements stripe={stripePromise}>
-					<div className="sr-root">
-						<div className="sr-content">
-							<div className="sr-main">
-								<Route
-									path="/checkoutform"
-									component={CheckoutForm}
-								/>
-							</div>
-						</div>
-					</div>
-				</Elements>
+				<ProtectedRoute path="/modules" component={Modules} />
+				<ProtectedRoute path="/profile" component={UserProfile} />
 			</Router>
 		</Provider>
 	</Auth0Provider>
