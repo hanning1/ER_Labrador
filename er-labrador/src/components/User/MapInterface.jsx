@@ -93,6 +93,19 @@ class Map extends React.Component {
 
 		// 选定区域在此处传出coordinate参数
 		PubSub.subscribe("coordinates", (_, data) => {
+            const coors = data[0];
+            var coorsString = "";
+
+            for (let i = 0; i < coors.length; i++) {
+                coorsString = coorsString + " " + coors[i][0] + " " + coors[i][1] + ",";
+            }
+            const wktString = coorsString.substring(1, coorsString.length - 1);
+            const polygon_wkt = "MULTIPOLYGON(((" + wktString + ")))";
+            // console.log("geo search data");
+            // console.log(polygon_wkt);
+
+            PubSub.publish("transfer_wkt", polygon_wkt);
+
 			this.setState({ coordinates: data });
 			this.setState({ center: data[0][0] });
 		});
@@ -208,17 +221,16 @@ class Map extends React.Component {
 
 				var v1 = "";
 				for (let i = 0; i < num_of_vertice; i++) {
-					v1 = v1 + vertices[i][0] + " " + vertices[i][1] + ",";
+					v1 = v1 + " " + vertices[i][0] + " " + vertices[i][1] + ",";
 				}
-				var v2 = v1.substring(0, v1.length - 1);
-				console.log("[v2]", v2);
-				polygon_wkt = "POLYGON((" + v2 + "))";
+				var v2 = v1.substring(1, v1.length - 1);
+				polygon_wkt = "MULTIPOLYGON(((" + v2 + ")))";
 
-				console.log(data.features[0]["geometry"]["coordinates"][0]);
-				//WKT POLYGON.
+				// console.log(data.features[0]["geometry"]["coordinates"][0]);
+				// //WKT POLYGON.
 
-				console.log(polygon_wkt);
-				console.log(area);
+				// console.log(polygon_wkt);
+				// console.log(area);
 			} else if (num_of_polygon > 1) {
 				v2 = "";
 				for (let i = 0; i < num_of_polygon; i++) {
@@ -227,19 +239,19 @@ class Map extends React.Component {
 
 					v1 = "";
 					for (let j = 0; j < num_of_vertice; j++) {
-						v1 = v1 + vertices[j][0] + " " + vertices[j][1] + ",";
+						v1 = v1 + " " +vertices[j][0] + " " + vertices[j][1] + ",";
 					}
-					v2 = v2 + "((" + v1.substring(0, v1.length - 1) + ")),";
+					v2 = v2 + "((" + v1.substring(1, v1.length - 1) + ")),";
 				}
 				var v3 = v2.substring(0, v2.length - 1);
 				polygon_wkt = "MULTIPOLYGON(" + v3 + ")";
 
-				console.log(data.features);
-				//WKT MULTIPOLYGON.
-				console.log(polygon_wkt);
-				console.log(area);
+				// console.log(data.features);
+				// //WKT MULTIPOLYGON.
+				// console.log(polygon_wkt);
+				// console.log(area);
 			}
-			console.log("Sent");
+			// console.log("Sent");
 			// 搜索结果 / 定制区域
 			PubSub.publish("transfer_wkt", polygon_wkt);
 		}

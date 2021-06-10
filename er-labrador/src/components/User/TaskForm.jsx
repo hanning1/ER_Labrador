@@ -16,7 +16,7 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
   const { Option } = Select;
   const history = useHistory()
   const handleGoTo = (values) => {
-    console.log("values2",values);
+    // console.log("values2",values);
   } 
 
   // Rate desc
@@ -37,9 +37,9 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
           .then((values) => {
             form.resetFields();
             onCreate(values);
-            console.log("values",values);
+            // console.log("values",values);
             temp = values;
-            console.log("temp",temp);
+            // console.log("temp",temp);
             console.log("history",history);
             history.push({pathname:'/checkoutform',state:{values,geometry:global.wkt}});
           })

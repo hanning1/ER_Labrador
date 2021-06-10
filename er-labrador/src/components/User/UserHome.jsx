@@ -150,9 +150,6 @@ class UserHome extends Component {
 				<Menu.Item key="1" icon={<ContainerOutlined />}>
 					<Link to="/history">History Orders</Link>
 				</Menu.Item>
-				<Menu.Item key="2" icon={<SettingOutlined />}>
-					Settings
-				</Menu.Item>
 				<Menu.Item key="3" icon={<LogoutOutlined />}>
 					{!isAuthenticated && <Link to="/login">Log in</Link>}
 					{isAuthenticated && <Link to="/login">Log out</Link>}
