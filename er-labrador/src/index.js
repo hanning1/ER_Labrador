@@ -67,12 +67,9 @@ const App = (
 				<ProtectedRoute path="/home" component={Home} />
 				<ProtectedRoute path="/orderDetail" component={OrderDetail} />
 				<ProtectedRoute path="/orders" component={Order} />
-				<ProtectedRoute path="/userDetail/:id" component={UserDetail} />
+				<ProtectedRoute path="/userDetail/:id" component={UserDetail}/>
 				<ProtectedRoute path="/users" component={Users} />
-				<ProtectedRoute
-					path="/moduleDetail/:id"
-					component={ModuleDetail}
-				/>
+				<ProtectedRoute path="/moduleDetail/:id" component={ModuleDetail}/>
 				<ProtectedRoute path="/modules" component={Modules} />
 				<ProtectedRoute path="/profile" component={UserProfile} />
 			</Router>

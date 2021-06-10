@@ -3,8 +3,8 @@
 const webpack = require("webpack"); //增加导入webpack
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin =
-	require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+	.BundleAnalyzerPlugin;
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const fs = require("fs");
 
