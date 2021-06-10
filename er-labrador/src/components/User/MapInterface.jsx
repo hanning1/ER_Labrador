@@ -252,7 +252,6 @@ class Map extends React.Component {
 				// console.log(area);
 			}
 			// console.log("Sent");
-			// 搜索结果 / 定制区域
 			PubSub.publish("transfer_wkt", polygon_wkt);
 		}
 

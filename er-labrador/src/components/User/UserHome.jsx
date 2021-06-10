@@ -115,8 +115,6 @@ class UserHome extends Component {
 	};
 
 	handleAdminLogin = (e) => {
-		console.log("button clicked, redirecting");
-		console.log("history: ", this.props);
 		this.props.history.push({
 			pathname: `/Admin/`,
 		});
@@ -150,7 +148,7 @@ class UserHome extends Component {
 				<Menu.Item key="1" icon={<ContainerOutlined />}>
 					<Link to="/history">History Orders</Link>
 				</Menu.Item>
-				<Menu.Item key="3" icon={<LogoutOutlined />}>
+				<Menu.Item key="2" icon={<LogoutOutlined />}>
 					{!isAuthenticated && <Link to="/login">Log in</Link>}
 					{isAuthenticated && <Link to="/login">Log out</Link>}
 				</Menu.Item>
