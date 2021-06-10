@@ -19,6 +19,12 @@ module.exports = {
 		// host: "127.0.0.1",
 		https: true,
 		host: "uom.eratos",
+		proxy: {
+			'/': {
+				target: 'http://localhost:4242',
+				secure: false
+			}
+		},
 		disableHostCheck: true,
 		port: 3000,
 		stats: {

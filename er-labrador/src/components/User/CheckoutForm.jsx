@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 // import "../../styles/CheckoutForm.css";
-import success from "../../assets/payment/success.jpg";
+import success from "../../assets/payment/success.png";
 import API from "./Api";
 import { withRouter } from "react-router";
 import moment from "moment";
@@ -9,6 +9,7 @@ import { createTask } from "./Api";
 import PubSub from "pubsub-js";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
+import "../../styles/CheckoutForm.css";
 
 function CheckoutForm(props) {
 	const [amount, setAmount] = useState(0);
@@ -22,16 +23,20 @@ function CheckoutForm(props) {
 	const [geometry, setGeometry] = useState(null);
 	const [TaskID, setTaskId] = useState("");
 	const [paid, setPaid] = useState(false);
+	const [userId, setUserId] = useState('');
 	const stripe = useStripe();
 	const elements = useElements();
+	
 
 	useEffect(() => {
 		// Step 1: Fetch product details such as amount and currency from
 		// API to make sure it can't be tampered with in the client.
-
-		console.log("props", props);
+		console.log("[props]",props);
+		setUserId(props.location.state.userId);
+		console.log("[userId]",userId);
 		setValues(props.location.state.values);
-		setGeometry(props.location.state.geometry);
+		setGeometry(''+props.location.state.geometry);
+		console.log("props", props);
 		setCurrency("aud");
 		setAmount(global.money);
 		var options = { amount: global.money * 100, currency: "aud" };
@@ -90,7 +95,7 @@ function CheckoutForm(props) {
 						"https://schemas.eratos.ai/json/utas.climateinfo",
 					taskType: "GenerateClimateInfo",
 					name: values.taskName,
-					geometry: "POINT(140.3142799 -42.84756651)",
+					geometry: ''+geometry,
 					priority: "low",
 				};
 				let res = await createTask(payload);
@@ -115,7 +120,13 @@ function CheckoutForm(props) {
 		return (
 			<div className="sr-field-success message">
 				<img src={success} alt="logo" />
+				<div>
+				<Button type="primary">
+			<Link to="/result">View Result</Link>
+		</Button>
+		</div>
 			</div>
+			
 		);
 	};
 
@@ -171,7 +182,9 @@ function CheckoutForm(props) {
 				{error && <div className="message sr-field-error">{error}</div>}
 
 				<button
-					className="btn"
+					variant="dark"
+					size="lg"
+					block
 					disabled={processing || !clientSecret || !stripe}
 				>
 					{processing ? "Processing…" : "Pay"}
@@ -185,9 +198,7 @@ function CheckoutForm(props) {
 			<div className="sr-payment-form">
 				<div className="sr-form-row" />
 				{succeeded ? <RenderSuccess /> : renderForm()}
-				<Button type="primary">
-					<Link to="/result">View Result</Link>
-				</Button>
+				
 			</div>
 		</div>
 	);
