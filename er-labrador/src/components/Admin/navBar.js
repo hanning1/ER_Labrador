@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { UPDATE_COLLAPSE, UPDATE_USER } from "../store/actionTypes";
+import { UPDATE_COLLAPSE, UPDATE_USER } from "../../store/actionTypes";
 import { Menu, Button, Layout, Avatar, Input, Image } from "antd";
 import {
 	MenuUnfoldOutlined,
@@ -14,9 +14,8 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 
 import "antd/dist/antd.css";
-import "../styles/navBar.css";
+import "../../styles/navBar.css";
 import { withRouter } from "react-router";
-import logo from "../ui/eratos.png";
 
 class NavBar extends Component {
 	constructor(props) {
@@ -26,6 +25,7 @@ class NavBar extends Component {
 
 	// if logged out, return to the home page
 	logout = (e) => {
+		console.log(window.location.origin);
 		this.props.auth0.logout({
 			returnTo: window.location.origin,
 		});
@@ -66,7 +66,7 @@ class NavBar extends Component {
 								key="1"
 								icon={<DashboardOutlined />}
 								onClick={() => {
-									this.props.history.push("/");
+									this.props.history.push("/Admin/");
 								}}
 							>
 								Dashboard
@@ -75,7 +75,7 @@ class NavBar extends Component {
 								key="2"
 								icon={<ControlOutlined />}
 								onClick={() => {
-									this.props.history.push("/modules");
+									this.props.history.push("/Admin/modules");
 								}}
 							>
 								Module Control Space
@@ -84,7 +84,7 @@ class NavBar extends Component {
 								key="3"
 								icon={<UserOutlined />}
 								onClick={() => {
-									this.props.history.push("/users");
+									this.props.history.push("/Admin/users");
 								}}
 							>
 								Users
@@ -93,7 +93,7 @@ class NavBar extends Component {
 								key="4"
 								icon={<OrderedListOutlined />}
 								onClick={() => {
-									this.props.history.push("/orders");
+									this.props.history.push("/Admin/orders");
 								}}
 							>
 								Orders
@@ -125,7 +125,9 @@ class NavBar extends Component {
 									icon={<UserOutlined />}
 									src={this.props.user.picture}
 									onClick={() => {
-										this.props.history.push("/profile/");
+										this.props.history.push(
+											"/Admin/profile/"
+										);
 									}}
 								></Avatar>
 								<Button onClick={() => this.logout()}>

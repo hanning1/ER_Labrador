@@ -2,31 +2,41 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { createHashHistory } from "history";
 import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 import {
-	DOMAIN_NAME,
-	CLIENT_ID,
-	REDIRECT_URI,
 	REACT_APP_ERATOS_AUTH0_AUD,
 	REACT_APP_ERATOS_AUTH0_DOMAIN,
 	REACT_APP_ERATOS_AUTH0_CLIENT_ID,
+	REACT_APP_ERATOS_AUTH0_REDIRECT_URI,
 } from "./store/auth0";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/index.css";
-import Login from "././components/login";
-import Home from "./components/home";
-import Order from "./components/order";
-import OrderDetail from "./components/orderDetail";
-import Users from "./components/users";
-import Modules from "./components/modules";
-import ModuleDetail from "./components/moduleDetail";
-import UserDetail from "./components/userDetail";
-import UserProfile from "./components/userProfile";
+// components from Admin end
+import AdminLogin from "././components/Admin/login";
+import AdminHome from "./components/Admin/home";
+import Order from "./components/Admin/order";
+import OrderDetail from "./components/Admin/orderDetail";
+import Users from "./components/Admin/users";
+import Modules from "./components/Admin/modules";
+import ModuleDetail from "./components/Admin/moduleDetail";
+import UserDetail from "./components/Admin/userDetail";
+import UserProfile from "./components/Admin/userProfile";
+// components from User end
+import UserApp from "./components/User/App";
+import UserHome from "./components/User/UserHome";
+import UserLogin from "./components/User/Login";
+import BasicTable from "./components/User/Orders";
+import CheckoutForm from "./components/User/CheckoutForm";
+import Result from "./components/User/Result";
+// import "./styles/CheckoutForm.css";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import api from "./components/User/Api";
 
-export const history = createBrowserHistory();
+const hashHistory = createHashHistory();
 
 const ProtectedRoute = ({ component, ...args }) => (
 	<Route component={withAuthenticationRequired(component)} {...args} />
@@ -34,32 +44,84 @@ const ProtectedRoute = ({ component, ...args }) => (
 
 const onRedirectCallback = (appState) => {
 	// Use the router's history module to replace the url
+	console.log("called to this place: ", appState, window.location.pathname);
 	history.replace(appState?.returnTo || window.location.pathname);
 };
+
+const stripePromise = api.getPublicStripeKey().then((key) => loadStripe(key));
+
+const User = "/User";
+const Admin = "/Admin";
 
 const App = (
 	// <React.StrictMode>
 	<Auth0Provider
 		domain={REACT_APP_ERATOS_AUTH0_DOMAIN}
 		clientId={REACT_APP_ERATOS_AUTH0_CLIENT_ID}
-		redirectUri={window.location.origin}
-		onRedirectCallback={onRedirectCallback}
+		redirectUri={REACT_APP_ERATOS_AUTH0_REDIRECT_URI}
+		onRedirectCallback={(appState) => onRedirectCallback}
 		useRefreshTokens={true}
 	>
 		<Provider store={store}>
-			<Router>
-				<Route path="/" exact component={Login} />
-				<ProtectedRoute path="/home" component={Home} />
-				<ProtectedRoute path="/orderDetail" component={OrderDetail} />
-				<ProtectedRoute path="/orders" component={Order} />
-				<ProtectedRoute path="/userDetail/:id" component={UserDetail} />
-				<ProtectedRoute path="/users" component={Users} />
-				<ProtectedRoute
-					path="/moduleDetail/:id"
-					component={ModuleDetail}
-				/>
-				<ProtectedRoute path="/modules" component={Modules} />
-				<ProtectedRoute path="/profile" component={UserProfile} />
+			<Router history={hashHistory}>
+				<Switch>
+					{/* Admin Side */}
+					<Route path={Admin + "/"} exact component={AdminLogin} />
+					<ProtectedRoute
+						path={Admin + "/home"}
+						component={AdminHome}
+					/>
+					<ProtectedRoute
+						path={Admin + "/orderDetail/:id"}
+						component={OrderDetail}
+					/>
+					<ProtectedRoute
+						path={Admin + "/orders"}
+						component={Order}
+					/>
+					<ProtectedRoute
+						path={Admin + "/userDetail/:id"}
+						component={UserDetail}
+					/>
+					<ProtectedRoute path={Admin + "/users"} component={Users} />
+					<ProtectedRoute
+						path={Admin + "/moduleDetail/:id"}
+						component={ModuleDetail}
+					/>
+					<ProtectedRoute
+						path={Admin + "/modules"}
+						component={Modules}
+					/>
+					<ProtectedRoute
+						path={Admin + "/profile"}
+						component={UserProfile}
+					/>
+					{/* User Side */}
+					<Route
+						path="/"
+						exact
+						render={() => <Redirect to="/app" />}
+					/>
+
+					<Route path="/app" component={UserApp} />
+
+					<Route path="/home" component={UserHome} />
+					<Route path="/history" component={BasicTable} />
+					<Route path="/login" component={UserLogin} />
+					<Route path="/result" component={Result} />
+					<Elements stripe={stripePromise}>
+						<div className="sr-root">
+							<div className="sr-content">
+								<div className="sr-main">
+									<Route
+										path="/checkoutform"
+										component={CheckoutForm}
+									/>
+								</div>
+							</div>
+						</div>
+					</Elements>
+				</Switch>
 			</Router>
 		</Provider>
 	</Auth0Provider>

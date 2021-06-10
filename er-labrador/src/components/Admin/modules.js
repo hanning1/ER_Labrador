@@ -2,16 +2,16 @@ import React, { Component, useState } from "react";
 import { Route, Redirect } from "react-router";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { UPDATE_USER } from "../store/actionTypes";
+import { UPDATE_USER } from "../../store/actionTypes";
 import axios from "axios";
 import NavBar from "./navBar";
-import "../styles/index.css";
+import "../../styles/index.css";
 import { Table, Input, Button, Switch, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
-import { columns, data } from "../../data sample/moduleData";
-import { getAllModules, createModifyModule } from "../store/api";
+import { columns, data } from "../../../data sample/moduleData";
+import { getAllModules, createModifyModule } from "../../store/api";
 
 import ProForm, {
 	ModalForm,
@@ -300,7 +300,7 @@ class Modules extends Component {
 								return {
 									onClick: (e) => {
 										this.props.history.push({
-											pathname: `/moduleDetail/${record.ModuleID}`,
+											pathname: `/Admin/moduleDetail/${record.ModuleID}`,
 											state: {
 												currRow: record,
 											},

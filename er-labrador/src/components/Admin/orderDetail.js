@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { UPDATE_USER } from "../store/actionTypes";
+import { UPDATE_USER } from "../../store/actionTypes";
 
 import NavBar from "./navBar";
-import "../styles/index.css";
+import "../../styles/index.css";
 import { Descriptions, Table, Input, Button, Space } from "antd";
 import { Button as RBButton } from "react-bootstrap";
 
