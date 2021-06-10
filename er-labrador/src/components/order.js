@@ -165,7 +165,7 @@ class Order extends Component {
 								return {
 									onClick: (e) => {
 										this.props.history.push({
-											pathname: `/orderDetail/${record.key}`,
+											pathname: `/orderDetail/${record.OrderID}`,
 											state: {
 												currRow: record,
 											},

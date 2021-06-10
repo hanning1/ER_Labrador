@@ -102,7 +102,7 @@ module.exports = {
 	},
 	plugins: [
 		// new CleanWebpackPlugin(),
-		new BundleAnalyzerPlugin(),
+		// new BundleAnalyzerPlugin(),
 		// plugins中增加下面内容，实例化热加载插件
 		// new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebPackPlugin({

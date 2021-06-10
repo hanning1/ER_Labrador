@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
+import { createHashHistory } from "history";
 import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 import {
 	DOMAIN_NAME,
@@ -26,7 +26,7 @@ import ModuleDetail from "./components/moduleDetail";
 import UserDetail from "./components/userDetail";
 import UserProfile from "./components/userProfile";
 
-export const history = createBrowserHistory();
+const hashHistory = createHashHistory();
 
 const ProtectedRoute = ({ component, ...args }) => (
 	<Route component={withAuthenticationRequired(component)} {...args} />
@@ -47,19 +47,27 @@ const App = (
 		useRefreshTokens={true}
 	>
 		<Provider store={store}>
-			<Router>
-				<Route path="/" exact component={Login} />
-				<ProtectedRoute path="/home" component={Home} />
-				<ProtectedRoute path="/orderDetail" component={OrderDetail} />
-				<ProtectedRoute path="/orders" component={Order} />
-				<ProtectedRoute path="/userDetail/:id" component={UserDetail} />
-				<ProtectedRoute path="/users" component={Users} />
-				<ProtectedRoute
-					path="/moduleDetail/:id"
-					component={ModuleDetail}
-				/>
-				<ProtectedRoute path="/modules" component={Modules} />
-				<ProtectedRoute path="/profile" component={UserProfile} />
+			<Router history={hashHistory}>
+				<Switch>
+					<Route path="/" exact component={Login} />
+					<ProtectedRoute path="/home" component={Home} />
+					<ProtectedRoute
+						path="/orderDetail/:id"
+						component={OrderDetail}
+					/>
+					<ProtectedRoute path="/orders" component={Order} />
+					<ProtectedRoute
+						path="/userDetail/:id"
+						component={UserDetail}
+					/>
+					<ProtectedRoute path="/users" component={Users} />
+					<ProtectedRoute
+						path="/moduleDetail/:id"
+						component={ModuleDetail}
+					/>
+					<ProtectedRoute path="/modules" component={Modules} />
+					<ProtectedRoute path="/profile" component={UserProfile} />
+				</Switch>
 			</Router>
 		</Provider>
 	</Auth0Provider>

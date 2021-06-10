@@ -168,7 +168,7 @@ class Users extends Component {
 								return {
 									onClick: (e) => {
 										this.props.history.push({
-											pathname: `/userDetail/${record.key}`,
+											pathname: `/userDetail/${record.UserID}`,
 											state: {
 												currRow: record,
 											},
