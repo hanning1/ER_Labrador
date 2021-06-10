@@ -6,10 +6,10 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { createHashHistory } from "history";
 import { Auth0Provider, withAuthenticationRequired } from "@auth0/auth0-react";
 import {
+	REDIRECT_URI,
 	REACT_APP_ERATOS_AUTH0_AUD,
 	REACT_APP_ERATOS_AUTH0_DOMAIN,
 	REACT_APP_ERATOS_AUTH0_CLIENT_ID,
-	REACT_APP_ERATOS_AUTH0_REDIRECT_URI,
 } from "./store/auth0";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -44,7 +44,6 @@ const ProtectedRoute = ({ component, ...args }) => (
 
 const onRedirectCallback = (appState) => {
 	// Use the router's history module to replace the url
-	console.log("called to this place: ", appState, window.location.pathname);
 	history.replace(appState?.returnTo || window.location.pathname);
 };
 
@@ -58,70 +57,55 @@ const App = (
 	<Auth0Provider
 		domain={REACT_APP_ERATOS_AUTH0_DOMAIN}
 		clientId={REACT_APP_ERATOS_AUTH0_CLIENT_ID}
-		redirectUri={REACT_APP_ERATOS_AUTH0_REDIRECT_URI}
-		onRedirectCallback={(appState) => onRedirectCallback}
+		redirectUri={window.location.origin}
+		onRedirectCallback={onRedirectCallback}
 		useRefreshTokens={true}
 	>
 		<Provider store={store}>
 			<Router history={hashHistory}>
-				<Switch>
-					{/* Admin Side */}
-					<Route path={Admin + "/"} exact component={AdminLogin} />
-					<ProtectedRoute
-						path={Admin + "/home"}
-						component={AdminHome}
-					/>
-					<ProtectedRoute
-						path={Admin + "/orderDetail/:id"}
-						component={OrderDetail}
-					/>
-					<ProtectedRoute
-						path={Admin + "/orders"}
-						component={Order}
-					/>
-					<ProtectedRoute
-						path={Admin + "/userDetail/:id"}
-						component={UserDetail}
-					/>
-					<ProtectedRoute path={Admin + "/users"} component={Users} />
-					<ProtectedRoute
-						path={Admin + "/moduleDetail/:id"}
-						component={ModuleDetail}
-					/>
-					<ProtectedRoute
-						path={Admin + "/modules"}
-						component={Modules}
-					/>
-					<ProtectedRoute
-						path={Admin + "/profile"}
-						component={UserProfile}
-					/>
-					{/* User Side */}
-					<Route
-						path="/"
-						exact
-						render={() => <Redirect to="/app" />}
-					/>
+				{/* Admin Side */}
+				<Route path={Admin + "/"} exact component={AdminLogin} />
+				<ProtectedRoute path={Admin + "/home"} component={AdminHome} />
+				<ProtectedRoute
+					path={Admin + "/orderDetail/:id"}
+					component={OrderDetail}
+				/>
+				<ProtectedRoute path={Admin + "/orders"} component={Order} />
+				<ProtectedRoute
+					path={Admin + "/userDetail/:id"}
+					component={UserDetail}
+				/>
+				<ProtectedRoute path={Admin + "/users"} component={Users} />
+				<ProtectedRoute
+					path={Admin + "/moduleDetail/:id"}
+					component={ModuleDetail}
+				/>
+				<ProtectedRoute path={Admin + "/modules"} component={Modules} />
+				<ProtectedRoute
+					path={Admin + "/profile"}
+					component={UserProfile}
+				/>
+				{/* User Side */}
+				<Route path="/" exact render={() => <Redirect to="/app" />} />
 
-					<Route path="/app" component={UserApp} />
+				<Route path="/app" component={UserApp} />
 
-					<Route path="/home" component={UserHome} />
-					<Route path="/history" component={BasicTable} />
-					<Route path="/login" component={UserLogin} />
-					<Route path="/result" component={Result} />
-					<Elements stripe={stripePromise}>
-						<div className="sr-root">
-							<div className="sr-content">
-								<div className="sr-main">
-									<Route
-										path="/checkoutform"
-										component={CheckoutForm}
-									/>
-								</div>
+				<Route path="/home" component={UserHome} />
+				<Route path="/history" component={BasicTable} />
+				<Route path="/login" component={UserLogin} />
+				<Route path="/result" component={Result} />
+				<Elements stripe={stripePromise}>
+					<div className="sr-root">
+						<div className="sr-content">
+							<div className="sr-main">
+								<Route
+									path="/checkoutform"
+									component={CheckoutForm}
+								/>
 							</div>
 						</div>
-					</Elements>
-				</Switch>
+					</div>
+				</Elements>
 			</Router>
 		</Provider>
 	</Auth0Provider>

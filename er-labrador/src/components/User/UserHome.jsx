@@ -115,6 +115,8 @@ class UserHome extends Component {
 	};
 
 	handleAdminLogin = (e) => {
+		console.log("button clicked, redirecting");
+		console.log("history: ", this.props);
 		this.props.history.push({
 			pathname: `/Admin/`,
 		});
