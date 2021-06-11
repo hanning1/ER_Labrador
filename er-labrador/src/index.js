@@ -32,18 +32,12 @@ const ProtectedRoute = ({ component, ...args }) => (
 	<Route component={withAuthenticationRequired(component)} {...args} />
 );
 
-const onRedirectCallback = (appState) => {
-	// Use the router's history module to replace the url
-	history.replace(appState?.returnTo || window.location.pathname);
-};
-
 const App = (
 	// <React.StrictMode>
 	<Auth0Provider
 		domain={REACT_APP_ERATOS_AUTH0_DOMAIN}
 		clientId={REACT_APP_ERATOS_AUTH0_CLIENT_ID}
-		redirectUri={window.location.origin}
-		onRedirectCallback={onRedirectCallback}
+		redirectUri={REDIRECT_URI}
 		useRefreshTokens={true}
 	>
 		<Provider store={store}>
