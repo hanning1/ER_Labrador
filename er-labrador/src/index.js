@@ -35,9 +35,9 @@ import Result from "./components/User/Result";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import api from "./components/User/Api";
-import { Button,Descriptions, Badge, Layout } from 'antd';
-import { HomeFilled } from '@ant-design/icons';
-import {Link} from 'react-router-dom';
+import { Button, Descriptions, Badge, Layout } from "antd";
+import { HomeFilled } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 const { Header, Content, Footer } = Layout;
 const hashHistory = createHashHistory();
 
@@ -45,15 +45,11 @@ const ProtectedRoute = ({ component, ...args }) => (
 	<Route component={withAuthenticationRequired(component)} {...args} />
 );
 
-const onRedirectCallback = (appState) => {
-	// Use the router's history module to replace the url
-	console.log("called to this place: ", appState, window.location.pathname);
-	history.replace(appState?.returnTo || window.location.pathname);
-};
-
-const stripePromise = api.getPublicStripeKey().then(key => loadStripe(key,{
-    locale: 'en'
-  }));
+const stripePromise = api.getPublicStripeKey().then((key) =>
+	loadStripe(key, {
+		locale: "en",
+	})
+);
 const User = "/User";
 const Admin = "/Admin";
 
@@ -63,7 +59,6 @@ const App = (
 		domain={REACT_APP_ERATOS_AUTH0_DOMAIN}
 		clientId={REACT_APP_ERATOS_AUTH0_CLIENT_ID}
 		redirectUri={REACT_APP_ERATOS_AUTH0_REDIRECT_URI}
-		onRedirectCallback={(appState) => onRedirectCallback}
 		useRefreshTokens={true}
 	>
 		<Provider store={store}>
@@ -113,23 +108,29 @@ const App = (
 					<Route path="/login" component={UserLogin} />
 					<Route path="/result" component={Result} />
 					<Layout className="layout">
-                        <Header className="header">
-                                <Link to='/home'><Button type="primary" shape="circle" size="large" icon={<HomeFilled/>}></Button></Link>
-                        </Header>
-                         <Content style={{ padding: 100,margin: 0}}>
-						<div className="sr-root">
+						<Header className="header">
+							<Link to="/home">
+								<Button
+									type="primary"
+									shape="circle"
+									size="large"
+									icon={<HomeFilled />}
+								></Button>
+							</Link>
+						</Header>
+						<Content style={{ padding: 100, margin: 0 }}>
+							<div className="sr-root">
 								<div className="sr-main">
-								<Elements stripe={stripePromise}>
-									<Route
-										path="/checkoutform"
-										component={CheckoutForm}
-									/>
+									<Elements stripe={stripePromise}>
+										<Route
+											path="/checkoutform"
+											component={CheckoutForm}
+										/>
 									</Elements>
 								</div>
 							</div>
-							</Content>
-                        </Layout>
-					
+						</Content>
+					</Layout>
 				</Switch>
 			</Router>
 		</Provider>
