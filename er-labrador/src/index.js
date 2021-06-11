@@ -9,7 +9,7 @@ import {
 	REACT_APP_ERATOS_AUTH0_AUD,
 	REACT_APP_ERATOS_AUTH0_DOMAIN,
 	REACT_APP_ERATOS_AUTH0_CLIENT_ID,
-	REACT_APP_ERATOS_AUTH0_REDIRECT_URI,
+	REACT_APP_ERATOS_AUTH0_REDIRECT_URI_MAIN,
 } from "./store/auth0";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -59,7 +59,7 @@ const App = (
 	<Auth0Provider
 		domain={REACT_APP_ERATOS_AUTH0_DOMAIN}
 		clientId={REACT_APP_ERATOS_AUTH0_CLIENT_ID}
-		redirectUri={REACT_APP_ERATOS_AUTH0_REDIRECT_URI}
+		redirectUri={REACT_APP_ERATOS_AUTH0_REDIRECT_URI_MAIN}
 		useRefreshTokens={true}
 	>
 		<Provider store={store}>

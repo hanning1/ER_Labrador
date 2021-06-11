@@ -7,6 +7,7 @@ import Home from "./home";
 import { connect } from "react-redux";
 import Loading from "./loading";
 import logo from "../../ui/logo.png";
+import { REACT_APP_ERATOS_AUTH0_REDIRECT_URI_ADMIN } from "../../store/auth0";
 
 const AdminLogin = (props) => {
 	const { isLoading, isAuthenticated, error, loginWithRedirect } = useAuth0();
@@ -44,7 +45,12 @@ const AdminLogin = (props) => {
 					<Button
 						variant="dark"
 						size="lg"
-						onClick={loginWithRedirect}
+						onClick={() =>
+							loginWithRedirect({
+								redirectUri:
+									REACT_APP_ERATOS_AUTH0_REDIRECT_URI_ADMIN,
+							})
+						}
 						block
 					>
 						Log in

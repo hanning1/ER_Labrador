@@ -162,6 +162,20 @@ class Order extends Component {
 								record.id;
 							}}
 							onRow={(record) => {
+								const orderTime = record.OrderTime.split(
+									" "
+								).filter((item) => {
+									return item.trim();
+								});
+								const timeDiff =
+									new Date().getTime() -
+									new Date(
+										`${orderTime[0]} ${orderTime[1]}, ${orderTime[2]}`
+									).getTime();
+								const timeUsed = Math.floor(
+									timeDiff / (1000 * 60 * 60 * 24)
+								);
+								record.TimeUsed = timeUsed.toString() + " days";
 								return {
 									onClick: (e) => {
 										this.props.history.push({

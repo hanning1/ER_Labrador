@@ -13,5 +13,7 @@ export const REACT_APP_ERATOS_AUTH0_DOMAIN = "auth.eratos.com";
 export const REACT_APP_ERATOS_AUTH0_CLIENT_ID =
 	"DUQ1DZMYmIBvMTIje2q3JlYNF5yiacKw";
 
-export const REACT_APP_ERATOS_AUTH0_REDIRECT_URI =
+export const REACT_APP_ERATOS_AUTH0_REDIRECT_URI_MAIN =
+	"https://uom.eratos:3000/";
+export const REACT_APP_ERATOS_AUTH0_REDIRECT_URI_ADMIN =
 	"https://uom.eratos:3000/#/Admin";
