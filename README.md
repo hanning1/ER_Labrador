@@ -95,7 +95,9 @@ You will also see any lint errors in the console.
 
 ### Steps to use the app:
 
-1. Click the Login button to log into the Geo+ Admin app
+1. Click the Login button to log into the Geo+ Admin app using the provided account from our client below to log in.
+    Email: uom-clgrp@eratos.com
+    Password: A9z6yOdQc8zoDyE741Xi
 2. The page will redirect you to the Auth0 Login page, register using any of the method would redirect you back to the home page.
 3. Click any item at the side bar or navigation bar to go to relative page and check information and even edit it.
 
