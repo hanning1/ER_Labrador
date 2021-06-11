@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-// import "../../styles/CheckoutForm.css";
 import success from "../../assets/payment/success.png";
 import API from "./Api";
 import { withRouter } from "react-router";

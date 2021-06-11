@@ -25,7 +25,7 @@ import ModuleDetail from "./components/Admin/moduleDetail";
 import UserDetail from "./components/Admin/userDetail";
 import UserProfile from "./components/Admin/userProfile";
 // components from User end
-import UserApp from "./components/User/App";
+// import UserApp from "./components/User/App";
 import UserHome from "./components/User/UserHome";
 import UserLogin from "./components/User/Login";
 import BasicTable from "./components/User/Orders";
@@ -104,11 +104,10 @@ const App = (
 					<Route
 						path="/"
 						exact
-						render={() => <Redirect to="/app" />}
+						render={() => <Redirect to="/home" />}
 					/>
 
-					<Route path="/app" component={UserApp} />
-
+					{/* <Route path="/app" component={UserApp} /> */}
 					<Route path="/home" component={UserHome} />
 					<Route path="/history" component={BasicTable} />
 					<Route path="/login" component={UserLogin} />

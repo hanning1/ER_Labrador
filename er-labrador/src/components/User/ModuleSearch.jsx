@@ -4,8 +4,7 @@ import React, { useState, useEffect} from 'react';
 import {useSubscribe, usePublish, useUnsubscribe} from './UsePubSub';
 
 function ModuleSearch(props) {
-    // 自动补全所需value对象数组
-
+    // autoComplete search modules
     const publish = usePublish();
     const unsubscribe = useUnsubscribe();
 

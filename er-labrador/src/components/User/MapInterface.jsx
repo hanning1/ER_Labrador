@@ -1,6 +1,5 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-import MapboxGeocoder from "mapbox-gl-geocoder";
 import MapboxDraw from "mapbox-gl-draw";
 import turf from "turf";
 import PubSub from "pubsub-js";

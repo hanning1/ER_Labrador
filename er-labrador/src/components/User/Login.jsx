@@ -6,8 +6,6 @@ import { Button } from "antd";
 import "../../styles/login.css";
 import Home from "./UserHome";
 import { connect } from "react-redux";
-//import Loading from "./loading";
-//import logo from "../ui/logo.png";
 
 import { Auth0Provider } from "@auth0/auth0-react";
 
