@@ -32,7 +32,20 @@ const UserLogin = (props) => {
 	}
 	console.log("[user]", user);
 	if (isAuthenticated) {
-		return <Home />;
+		return (
+			<div className="login">
+				<div className="loginCard">
+					<Button
+						variant="dark"
+						size="lg"
+						onClick={logoutWithRedirect}
+						block
+					>
+						Log in
+					</Button>
+				</div>
+			</div>
+		);
 	} else {
 		return (
 			<div className="login">

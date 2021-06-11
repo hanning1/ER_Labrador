@@ -35,7 +35,10 @@ import Result from "./components/User/Result";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import api from "./components/User/Api";
-
+import { Button,Descriptions, Badge, Layout } from 'antd';
+import { HomeFilled } from '@ant-design/icons';
+import {Link} from 'react-router-dom';
+const { Header, Content, Footer } = Layout;
 const hashHistory = createHashHistory();
 
 const ProtectedRoute = ({ component, ...args }) => (
@@ -48,8 +51,9 @@ const onRedirectCallback = (appState) => {
 	history.replace(appState?.returnTo || window.location.pathname);
 };
 
-const stripePromise = api.getPublicStripeKey().then((key) => loadStripe(key));
-
+const stripePromise = api.getPublicStripeKey().then(key => loadStripe(key,{
+    locale: 'en'
+  }));
 const User = "/User";
 const Admin = "/Admin";
 
@@ -109,18 +113,24 @@ const App = (
 					<Route path="/history" component={BasicTable} />
 					<Route path="/login" component={UserLogin} />
 					<Route path="/result" component={Result} />
-					<Elements stripe={stripePromise}>
+					<Layout className="layout">
+                        <Header className="header">
+                                <Link to='/home'><Button type="primary" shape="circle" size="large" icon={<HomeFilled/>}></Button></Link>
+                        </Header>
+                         <Content style={{ padding: 100,margin: 0}}>
 						<div className="sr-root">
-							<div className="sr-content">
 								<div className="sr-main">
+								<Elements stripe={stripePromise}>
 									<Route
 										path="/checkoutform"
 										component={CheckoutForm}
 									/>
+									</Elements>
 								</div>
 							</div>
-						</div>
-					</Elements>
+							</Content>
+                        </Layout>
+					
 				</Switch>
 			</Router>
 		</Provider>
