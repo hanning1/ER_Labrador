@@ -31,6 +31,7 @@ import UserLogin from "./components/User/Login";
 import BasicTable from "./components/User/Orders";
 import CheckoutForm from "./components/User/CheckoutForm";
 import Result from "./components/User/Result";
+import UserInfo from "./components/User/UserInfoPage";
 // import "./styles/CheckoutForm.css";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -107,6 +108,7 @@ const App = (
 					<Route path="/history" component={BasicTable} />
 					<Route path="/login" component={UserLogin} />
 					<Route path="/result" component={Result} />
+					<Route path="/userInfo" component={UserInfo} />
 					<Layout className="layout">
 						<Header className="header">
 							<Link to="/home">

@@ -1,7 +1,8 @@
 import { Layout,Menu ,Form,Input, Button} from 'antd';
 import React from 'react'
 import 'antd/dist/antd.css'
-import './UserInfoPage.css'
+import "../../styles/UserInfoPage.css";
+
 import Orders from "./Orders.jsx"
 import { UploadOutlined, UserOutlined,  MoneyCollectOutlined,BorderlessTableOutlined} from '@ant-design/icons';
 import { Link,Route } from 'react-router-dom';
