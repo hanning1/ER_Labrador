@@ -21,7 +21,7 @@ const layout = {
 
 const tailLayout = {
 	wrapperCol: { offset: 8, span: 16 },
-};
+}
 
 const validateMessages = {
 	required: "${label} is required!",
@@ -38,11 +38,12 @@ class UserInfoPage extends React.Component {
 	state = {
 		disabled: true,
 
+		userUri: "https://staging.e-pn.io/users/xsrudeulfvtr2eiaiksic2jf",
+
 		// user information
-		name: "xm",
-		email: "123@test.com",
-		card: "123",
-		cvv: "111",
+		username: "default",
+		useremail: "default",
+		
 	};
 
 	toggle = () => {
@@ -50,6 +51,47 @@ class UserInfoPage extends React.Component {
 			disabled: !this.state.disabled,
 		});
 	};
+
+	async componentDidMount(){
+		PubSub.subscribe("getUserId", (data) => {
+			console.log("User Uri is: " + data);
+			this.setState({
+				userUri: data,
+			});
+		});
+
+		let url =
+			"https://eratosuombackend.azurewebsites.net/api/getUserInfo?userUri=" +
+			this.state.userUri +
+			" &code=pC04Se3EKKG7Is6PPO3az2Idtzg6gJEFrTVbvpOIKh0JXfd9itviGQ==";
+
+		try {
+			const response = await fetch(url, {
+				method: "GET",
+			})
+				.then((resp) => resp.json())
+				.catch((error) => {
+					console.log(error);
+				});
+			
+			console.log(response)
+
+			var info = response.UserInfo;
+			
+			console.log(info.Name)
+
+			console.log("hi")
+		} catch (error) {
+			console.log("request is failed", error);
+		}
+
+		this.setState({
+			username:info["Name"],
+			useremail:info["Email"]
+		});
+
+		console.log(this.state.username)
+	}
 
 	render() {
 		return (
@@ -73,6 +115,7 @@ class UserInfoPage extends React.Component {
 					>
 						<Menu.Item key="1" icon={<UserOutlined />}>
 							Basic Information
+							
 						</Menu.Item>
 					</Menu>
 				</Sider>
@@ -90,43 +133,29 @@ class UserInfoPage extends React.Component {
 								style={{ width: "550px" }}
 							>
 								<Form.Item
-									name={["user", "username"]}
 									label="User Name"
 								>
 									<Input
 										disabled={this.state.disabled}
-										defaultValue={this.state.name}
+										placeholder={
+											this.state.username
+												? this.state.username
+												: "None"
+										}
 									/>
 								</Form.Item>
 
 								<Form.Item
-									name={["user", "email"]}
 									label="Email"
 									rules={[{ type: "email" }]}
 								>
 									<Input
 										disabled={this.state.disabled}
-										defaultValue={this.state.email}
-									/>
-								</Form.Item>
-
-								<Form.Item
-									name={["user", "card"]}
-									label="Bank Card"
-								>
-									<Input
-										disabled={this.state.disabled}
-										defaultValue={this.state.card}
-									/>
-								</Form.Item>
-
-								<Form.Item
-									name={["user", "cvv"]}
-									label="CVV Number"
-								>
-									<Input
-										disabled={this.state.disabled}
-										defaultValue={this.state.cvv}
+										placeholder={
+											this.state.useremail
+												? this.state.useremail
+												: "None"
+										}
 									/>
 								</Form.Item>
 
